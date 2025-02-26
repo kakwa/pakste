@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# amkecpak documentation build configuration file, created by
+# pakste documentation build configuration file, created by
 # sphinx-quickstart on Fri Aug 30 20:00:29 2013.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'amkecpak'
+project = u'pakste'
 copyright = u'2017 Pierre-Francois Carpentier'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -174,7 +174,7 @@ html_last_updated_fmt = '%Y-%m-%d'
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'amkecpak doc'
+htmlhelp_basename = 'pakste doc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -193,7 +193,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'amkecpak.tex', u'amkecpak Documentation',
+  ('index', 'pakste.tex', u'pakste Documentation',
    u'Pierre-Francois Carpentier', 'manual'),
 ]
 
@@ -223,7 +223,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'amkecpak', u'amkecpak Documentation',
+    ('index', 'pakste', u'pakste Documentation',
      [u'Pierre-Francois Carpentier'], 1)
 ]
 
@@ -237,8 +237,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'amkecpak', u'amkecpak Documentation',
-   u'Pierre-Francois Carpentier', 'amkecpak', 'Make based packaging framework',
+  ('index', 'pakste', u'pakste Documentation',
+   u'Pierre-Francois Carpentier', 'pakste', 'Make based packaging framework',
    'Miscellaneous'),
 ]
 
@@ -258,7 +258,7 @@ texinfo_documents = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'amkecpak'
+epub_title = u'pakste'
 epub_author = u'Pierre-Francois Carpentier'
 epub_publisher = u'Pierre-Francois Carpentier'
 epub_copyright = u'2017 Pierre-Francois Carpentier'

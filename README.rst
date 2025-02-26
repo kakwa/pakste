@@ -4,12 +4,12 @@ Pakste
 Pakste simplifies the creation and maintenance of DEB and RPM packages and repositories.
 It provides a Makefile and Github Actions based workflow to build and publish packages across multiple Linux distributions.
 
-.. image:: https://readthedocs.org/projects/amkecpak/badge/?version=latest
-    :target: http://amkecpak.readthedocs.org/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/pakste/badge/?version=latest
+    :target: http://pakste.readthedocs.org/en/latest/?badge=latest
     :alt: Documentation Status
 
-:Documentation: `ReadTheDocs <http://amkecpak.readthedocs.org/en/latest/>`_
-:Repository:    `GitHub <https://github.com/kakwa/amkecpak>`_
+:Documentation: `ReadTheDocs <http://pakste.readthedocs.org/en/latest/>`_
+:Repository:    `GitHub <https://github.com/kakwa/pakste>`_
 :Author:        Pierre-Francois Carpentier - copyright © 2017-2023
 
 
@@ -71,4 +71,4 @@ Create  package repositories:
     $ make deb_repo -j 4 DIST=bullseye     # Debian repository
     $ make rpm_repo -j 4 DIST=el9          # RPM repository
 
-For more details, see the `complete documentation <http://amkecpak.readthedocs.org/en/latest/>`_.
+For more details, see the `complete documentation <http://pakste.readthedocs.org/en/latest/>`_.

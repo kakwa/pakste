@@ -43,13 +43,6 @@ However, don't expect this framework to magically package anything for you.
 Appart from a few metadata substitutions like version, license, packager's email or description, 
 this framework keeps all the knobs of regular .deb or .rpm packaging.
 
-Name
-====
-
-amkecpak is just an anagram of makepack (for Make Package).
-
-
-
 Resources
 =========
 
