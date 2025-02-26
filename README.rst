@@ -1,61 +1,74 @@
-Pakste, a makefile based packaging framework.
+Pakste
+======
+
+Pakste simplifies the creation and maintenance of DEB and RPM packages and repositories.
+It provides a Makefile and Github Actions based workflow to build and publish packages across multiple Linux distributions.
 
 .. image:: https://readthedocs.org/projects/amkecpak/badge/?version=latest
     :target: http://amkecpak.readthedocs.org/en/latest/?badge=latest
     :alt: Documentation Status
 
-----
-
-:Doc:    `Documentation on ReadTheDoc <http://amkecpak.readthedocs.org/en/latest/>`_
-:Dev:    `GitHub <https://github.com/kakwa/amkecpak>`_
-:Author:  Pierre-Francois Carpentier - copyright © 2017
-
-----
+:Documentation: `ReadTheDocs <http://amkecpak.readthedocs.org/en/latest/>`_
+:Repository:    `GitHub <https://github.com/kakwa/amkecpak>`_
+:Author:        Pierre-Francois Carpentier - copyright © 2017-2023
 
 
-Packaging documentation in a nutshell
--------------------------------------
+Prerequisites
+~~~~~~~~~~~~~
+
+Install the required packaging tools for your distribution:
 
 .. sourcecode:: bash
-    
-    # Install the packaing tools
+
+    # Debian/Ubuntu:
     $ apt-get install make debhelper reprepro cowbuilder wget
-    # or
+
+    # RHEL/CentOS/Fedora:
     $ yum install make rpm-sign expect rpm-build createrepo mock wget
 
-    # Init a package foo
-    $ ./common/init_pkg.sh -n foo
+Package Creation
+~~~~~~~~~~~~~~~~
 
+Initialize and configure a new package:
+
+.. sourcecode:: bash
+
+    # Initialize a new package
+    $ ./common/init_pkg.sh -n foo
     $ cd foo/
 
-    # Implementing the package
+    # Configure package
     $ vim Makefile
     $ make manifest
-    $ vim debian/rules ; vim debian/control
+    $ vim debian/rules debian/control
     $ vim rpm/component.spec
 
-    # Help for the various targets
-    $ make help
+Building Packages
+~~~~~~~~~~~~~~~~~
 
-    # Building the packages
-    $ make deb
-    $ make rpm
-    
-    # Same in chroots, targeting specific distribution versions
-    $ make deb_chroot DIST=jessie
-    $ make rpm_chroot DIST=el7
+Build packages in clean, isolated environments:
 
-    $ cd ../
+.. sourcecode:: bash
 
-    # gpg key generation (one time thing)
+    # Build in disposable chroots for specific distributions
+    $ make deb_chroot DIST=trixie    # Debian Trixie
+    $ make rpm_chroot DIST=el9       # RHEL/CentOS 9
+
+Repository Management
+~~~~~~~~~~~~~~~~~~~~~
+
+Create  package repositories:
+
+.. sourcecode:: bash
+
+    # One-time GPG setup for signing packages
     $ gpg --gen-key
-    
-    # editing the global configuration
-    $ vim common/buildenv/Makefile.config
 
-    # Building the repositories
-    # Use ERROR=skip to ignore package build failures and continue building the repo
-    $ make deb_repo -j 4 DIST=jessie # ERROR=skip
-    $ make rpm_repo -j 1 DIST=el7    # ERROR=skip
+    # Configure repository settings
+    $ vim Makefile.config
 
-If you need more information, read the `detailed documentation <http://amkecpak.readthedocs.org/en/latest/>`_.
+    # Build repositories (use -j N for parallel builds)
+    $ make deb_repo -j 4 DIST=bullseye     # Debian repository
+    $ make rpm_repo -j 4 DIST=el9          # RPM repository
+
+For more details, see the `complete documentation <http://amkecpak.readthedocs.org/en/latest/>`_.
