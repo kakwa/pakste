@@ -1,108 +1,116 @@
-Cheatsheet
-----------
+Makefile Reference
+------------------
 
-Scripts
-=======
+This page documents the main Makefile targets and variables available in Pakste.
 
-Initialize a package:
+Package Initialization
+=====================
 
 .. sourcecode:: bash
 
+    # Initialize a new package
     $ ./common/init_pkg.sh -n <PKG_NAME>
 
-All Makefiles
-=============
+Common Targets
+==============
 
-Display the help:
+.. list-table::
+   :header-rows: 1
+   :widths: 25 75
+
+   * - Target
+     - Description
+   * - ``help``
+     - Display available targets and their descriptions
+   * - ``clean``
+     - Remove all build artifacts and directories
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 15 65
+
+   * - Variable
+     - Default
+     - Description
+   * - ``KEEP_CACHE`` (clean target only)
+     - ``false``
+     - When set to ``true``, keeps downloaded sources during clean
+
+Package Building Targets
+========================
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 75
+
+   * - Target
+     - Description
+   * - ``manifest``
+     - Create or update the MANIFEST file with source archive checksums
+   * - ``deb``
+     - Build DEB package locally (requires build dependencies)
+   * - ``rpm``
+     - Build RPM package locally (requires build dependencies)
+   * - ``deb_chroot``
+     - Build DEB package in a clean chroot environment
+   * - ``rpm_chroot``
+     - Build RPM package in a clean chroot environment
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 15 65
+
+   * - Variable
+     - Default
+     - Description
+   * - ``DIST``
+     - *none*
+     - Target distribution codename (e.g., bullseye, el9)
+
+Repository Targets
+==================
+
+.. list-table::
+   :header-rows: 1
+   :widths: 25 75
+
+   * - Target
+     - Description
+   * - ``deb_repo``
+     - Build a complete DEB repository for a distribution
+   * - ``rpm_repo``
+     - Build a complete RPM repository for a distribution
+
+.. list-table::
+   :header-rows: 1
+   :widths: 20 15 65
+
+   * - Variable
+     - Default
+     - Description
+   * - ``DIST``
+     - *none*
+     - Target distribution codename (e.g., bullseye, el9)
+   * - ``ERROR``
+     - *none*
+     - Set to ``skip`` to continue building repos despite package failures
+
+Examples
+========
 
 .. sourcecode:: bash
 
-    $ make help
+    # Build a DEB package in a chroot for Debian Bullseye
+    $ make deb_chroot DIST=bullseye
 
-Listing the the distribution versions available:
+    # Build an RPM package in a chroot for RHEL 9
+    $ make rpm_chroot DIST=el9
 
-.. sourcecode:: bash
+    # Build a complete DEB repository with parallel jobs
+    $ make deb_repo -j4 DIST=bullseye
 
-    $ make list_dist
+    # Build a complete RPM repository, continuing on errors
+    $ make rpm_repo DIST=el9 ERROR=skip
 
-Cleaning:
-
-.. sourcecode:: bash
-
-    # clean everything
-    $ make clean
-
-    # clean everything except upstream downloads
+    # Clean but keep downloaded sources
     $ make clean KEEP_CACHE=true
-
-Package Makefile
-================
-
-(Re)creating the MANIFEST file:
-
-.. sourcecode:: bash
-
-    $ make manifest
-
-Building .deb:
-
-.. sourcecode:: bash
-
-    $ make deb
-
-Building .rpm:
-
-.. sourcecode:: bash
-
-    $ make rpm
-
-Building .deb (chroot):
-
-.. sourcecode:: bash
-
-    $ make deb_chroot DIST=<VERSION>
-
-Building .rpm (chroot):
-
-.. sourcecode:: bash
-
-    $ make rpm_chroot DIST=<VERSION>
-
-Global Makefile
-===============
-
-Building all .deb:
-
-.. sourcecode:: bash
-
-    $ make deb
-
-Building all .rpm:
-
-.. sourcecode:: bash
-
-    $ make rpm
-
-Building  all.deb (chroot):
-
-.. sourcecode:: bash
-
-    $ make deb_chroot DIST=<VERSION>
-
-Building all .rpm (chroot):
-
-.. sourcecode:: bash
-
-    $ make rpm_chroot DIST=<VERSION>
-
-Building the .deb repository:
-
-.. sourcecode:: bash
-
-    $ make deb_repo DIST<VERSION>
-
-Building the .rpm repository:
-
-.. sourcecode:: bash
-
-    $ make rpm_repo DIST<VERSION>

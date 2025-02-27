@@ -1,65 +1,26 @@
-Misc documentation
-------------------
+Additional Information
+----------------------
 
-.. Add a prefix to all packages
-.. ============================
-.. 
-.. If you want to prefix all your packages, just uncomment and fill **PREFIX**
-.. at the beginning of **common/buildenv/Makefile.common**:
-.. 
-.. .. sourcecode:: make
-.. 
-..     # general prefix, comment if not needed
-..     PREFIX=kakwa-
-.. 
-..     PKGNAME=$(PREFIX)$(NAME)
-.. 
-.. 
-.. example with **PREFIX=kakwa-** for package dwm-desktop:
-.. 
-.. .. sourcecode:: none
-.. 
-..     dwm-desktop_5.9.0-1_amd64.deb  -> kakwa-dwm-desktop_5.9.0-1_amd64.deb
+GPG Key Management
+==================
 
-
-GPG cheat sheet
-===============
-
-Package are signed by a gpg key.
-
-Here are some useful commands to manage this key:
-
-Generate the GPG key:
+Packages are signed with a GPG key. Here are essential commands for key management:
 
 .. sourcecode:: bash
 
+    # Generate a new GPG key
     $ gpg --gen-key
 
-
-List the keys:
-
-.. sourcecode:: bash
-
+    # List available keys
     $ gpg -K
 
+    # Export private key (for multiple build hosts)
+    $ gpg --export-secret-key -a "Your Name" > private.gpg
 
-Export the private key (multiple hosts):
+    # Import private key on another system
+    $ gpg --import private.gpg
 
-.. sourcecode:: bash
+    # Import public key into apt (for testing)
+    $ cat public.gpg | apt-key add -
 
     $ gpg --export-secret-key -a "kakwa" > priv.gpg
-
-
-Import the private key:
-
-.. sourcecode:: bash
-
-    $ gpg --import priv.gpg
-
-
-import the key in debian:
-
-.. sourcecode:: bash
-
-    $ cat pub.gpg | apt-key add -
-
