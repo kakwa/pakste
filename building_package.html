@@ -201,7 +201,6 @@
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="packaging.html">Package Creation</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Building Packages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#additional-setup">Additional Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="building_repo.html">Repository</a></li>
 <li class="toctree-l1"><a class="reference internal" href="targets.html">Makefile Reference</a></li>
 </ul>
@@ -284,11 +283,10 @@ make<span class="w"> </span>clean<span class="w"> </span><span class="nv">KEEP_C
 </pre></div>
 </div>
 </section>
-</section>
-<section id="additional-setup">
-<h1>Additional Setup<a class="headerlink" href="#additional-setup" title="Link to this heading">¶</a></h1>
+<section id="optional-setup">
+<h2>Optional Setup<a class="headerlink" href="#optional-setup" title="Link to this heading">¶</a></h2>
 <section id="sudoers-configuration">
-<h2>Sudoers Configuration<a class="headerlink" href="#sudoers-configuration" title="Link to this heading">¶</a></h2>
+<h3>Sudoers Configuration<a class="headerlink" href="#sudoers-configuration" title="Link to this heading">¶</a></h3>
 <p>Building in chroot requires root permission.</p>
 <p>If <strong>make deb_chroot</strong> is run as a standard user, <strong>sudo</strong> will be used for cowbuilder calls.</p>
 <p>If you want to avoid password promt add the following line to the sudoers configuration:</p>
@@ -296,12 +294,15 @@ make<span class="w"> </span>clean<span class="w"> </span><span class="nv">KEEP_C
 build-user<span class="w"> </span><span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span><span class="w"> </span>NOPASSWD:<span class="w"> </span>/usr/sbin/cowbuilder
 </pre></div>
 </div>
-<p>Signing keys</p>
+</section>
+<section id="signing-keys">
+<h3>Signing keys<a class="headerlink" href="#signing-keys" title="Link to this heading">¶</a></h3>
 <p>Cowbuilder requires the GPG keys of the targeted DIST.</p>
 <p>If you get errors like <cite>E: Release signed by unknown key (key id EF0F382A1A7B6500)</cite>, try installing the keyrings:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ubuntu-keyring<span class="w"> </span>debian-archive-keyring<span class="w"> </span>ubuntu-archive-keyring<span class="w"> </span>debian-keyring
 </pre></div>
 </div>
+</section>
 </section>
 <section id="tmpfs-ramfs">
 <h2>TMPFS/RAMFS<a class="headerlink" href="#tmpfs-ramfs" title="Link to this heading">¶</a></h2>
@@ -391,10 +392,11 @@ tmpfs<span class="w"> </span>/var/lib/mock<span class="w"> </span>tmpfs<span cla
 <li><a class="reference internal" href="#rpm-packages">.rpm Packages</a></li>
 <li><a class="reference internal" href="#deb-packages">.deb Packages</a></li>
 <li><a class="reference internal" href="#clean">Clean</a></li>
+<li><a class="reference internal" href="#optional-setup">Optional Setup</a><ul>
+<li><a class="reference internal" href="#sudoers-configuration">Sudoers Configuration</a></li>
+<li><a class="reference internal" href="#signing-keys">Signing keys</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#additional-setup">Additional Setup</a><ul>
-<li><a class="reference internal" href="#sudoers-configuration">Sudoers Configuration</a></li>
 <li><a class="reference internal" href="#tmpfs-ramfs">TMPFS/RAMFS</a></li>
 <li><a class="reference internal" href="#building-for-fossil-distributions">Building for fossil distributions</a></li>
 </ul>
