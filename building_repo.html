@@ -249,7 +249,11 @@
 <h1>Repository<a class="headerlink" href="#repository" title="Link to this heading">¶</a></h1>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
-<p>Configure repository metadata in <strong>Makefile.config</strong>:</p>
+<p>Create <strong>Makefile.config</strong> and set the repository metadata:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># copy configuration example</span>
+cp<span class="w"> </span>Makefile.config.ex<span class="w"> </span>Makefile.config
+</pre></div>
+</div>
 <div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="c"># Maintainer information</span>
 <span class="nv">MAINTAINER</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>Name<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>Maintainer
 <span class="nv">MAINTAINER_EMAIL</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>somebody@example.com
@@ -284,22 +288,25 @@
 <section id="gpg-key">
 <h2>GPG Key<a class="headerlink" href="#gpg-key" title="Link to this heading">¶</a></h2>
 <p>Packages are signed with a GPG key. Here are essential commands for key management:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a new GPG key</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">GPG_KEY</span><span class="o">=</span><span class="s2">&quot;GPG_SIGNKEY&quot;</span>
+
+<span class="c1"># Generate a new GPG key</span>
 gpg<span class="w"> </span>--gen-key
 
 <span class="c1"># List available keys</span>
 gpg<span class="w"> </span>-K
 
 <span class="c1"># Export private key (for multiple build hosts)</span>
-gpg<span class="w"> </span>--export-secret-key<span class="w"> </span>-a<span class="w"> </span><span class="s2">&quot;Your Name&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>private.gpg
+gpg<span class="w"> </span>--export-secret-key<span class="w"> </span>-a<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">GPG_KEY</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>priv.gpg
 
 <span class="c1"># Import private key on another system</span>
-gpg<span class="w"> </span>--import<span class="w"> </span>private.gpg
+gpg<span class="w"> </span>--import<span class="w"> </span>priv.gpg
+
+<span class="c1"># Export public key</span>
+gpg<span class="w"> </span>--armor<span class="w"> </span>--output<span class="w"> </span><span class="k">$(</span>OUT_DIR<span class="k">)</span>/GPG-KEY.pub<span class="w"> </span>--export<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">GPG_KEY</span><span class="si">}</span><span class="s2">&quot;</span>
 
 <span class="c1"># Import public key into apt (for testing)</span>
 cat<span class="w"> </span>public.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>apt-key<span class="w"> </span>add<span class="w"> </span>-
-
-gpg<span class="w"> </span>--export-secret-key<span class="w"> </span>-a<span class="w"> </span><span class="s2">&quot;kakwa&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>priv.gpg
 </pre></div>
 </div>
 </section>
