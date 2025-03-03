@@ -258,8 +258,8 @@
 </pre></div>
 </div>
 </section>
-<section id="rhel-centos-fedora">
-<h2>RHEL/CentOS/Fedora<a class="headerlink" href="#rhel-centos-fedora" title="Link to this heading">¶</a></h2>
+<section id="rhel-rocky-fedora">
+<h2>RHEL/Rocky/Fedora<a class="headerlink" href="#rhel-rocky-fedora" title="Link to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dnf<span class="w"> </span>install<span class="w"> </span>make<span class="w"> </span>rpm-sign<span class="w"> </span>expect<span class="w"> </span>rpm-build<span class="w"> </span>createrepo<span class="w"> </span>mock<span class="w"> </span>wget
 </pre></div>
 </div>
@@ -270,7 +270,12 @@
 </section>
 <section id="to-build-cross-arch">
 <h2>To build cross-arch<a class="headerlink" href="#to-build-cross-arch" title="Link to this heading">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt<span class="w"> </span>install<span class="w"> </span>binfmt-support<span class="w"> </span>qemu<span class="w"> </span>qemu-system-arm
+<p>Debian/Ubuntu:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt<span class="w"> </span>install<span class="w"> </span>binfmt-support<span class="w"> </span>qemu<span class="w"> </span>qemu-system-arm<span class="w"> </span>qemu-system-riscv
+</pre></div>
+</div>
+<p>RHEL/Rocky/Fedora:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dnf<span class="w"> </span>install<span class="w"> </span>qemu-user-binfmt<span class="w"> </span>qemu-system-riscv<span class="w"> </span>qemu-system-aarch64
 </pre></div>
 </div>
 </section>
@@ -334,7 +339,7 @@
             <ul>
 <li><a class="reference internal" href="#">Build Dependencies</a><ul>
 <li><a class="reference internal" href="#debian-ubuntu">Debian/Ubuntu</a></li>
-<li><a class="reference internal" href="#rhel-centos-fedora">RHEL/CentOS/Fedora</a></li>
+<li><a class="reference internal" href="#rhel-rocky-fedora">RHEL/Rocky/Fedora</a></li>
 <li><a class="reference internal" href="#to-build-cross-arch">To build cross-arch</a></li>
 </ul>
 </li>

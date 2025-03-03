@@ -261,7 +261,7 @@
 <section id="initializing-a-package">
 <h2>Initializing a Package<a class="headerlink" href="#initializing-a-package" title="Link to this heading">¶</a></h2>
 <p>Create a package skeleton:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./common/init_pkg.sh<span class="w"> </span>-n<span class="w"> </span>foo
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./common/init_pkg.sh<span class="w"> </span>-n<span class="w"> </span>mk-sh-skel
 </pre></div>
 </div>
 <p>This creates the following structure:</p>
@@ -280,20 +280,20 @@
 </pre></div>
 </div>
 </section>
-<section id="configuring-the-makefile">
-<h2>Configuring the Makefile<a class="headerlink" href="#configuring-the-makefile" title="Link to this heading">¶</a></h2>
+<section id="package-metadata">
+<h2>Package Metadata<a class="headerlink" href="#package-metadata" title="Link to this heading">¶</a></h2>
 <p>The Makefile contains package metadata and upstream source configuration:</p>
 <div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="c"># Package name</span>
-<span class="nv">NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>foo
+<span class="nv">NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mk-sh-skel
 
 <span class="c"># Version</span>
 <span class="nv">VERSION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>.0.0
 
+<span class="c"># URL of the project</span>
+<span class="nv">URL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>https://github.com/kakwa/mk-sh-skel
+
 <span class="c"># Revision number</span>
 <span class="nv">RELEASE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
-
-<span class="c"># URL to upstream source</span>
-<span class="nv">URL_SRC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>https://example.com/<span class="k">$(</span>NAME<span class="k">)</span>-<span class="k">$(</span>VERSION<span class="k">)</span>.tar.gz
 
 <span class="c"># Description</span>
 <span class="nv">DESCRIPTION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Description of the package&quot;</span>
@@ -301,57 +301,100 @@
 <span class="c"># License of the package</span>
 <span class="nv">LICENSE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;MIT&quot;</span>
 
-<span class="c"># Build dependencies and package dependencies are defined in</span>
-<span class="c"># debian/control and rpm/component.spec</span>
+<span class="c"># URL to upstream source</span>
+<span class="nv">URL_SRC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">$(</span>URL<span class="k">)</span>/archive/<span class="k">$(</span>VERSION<span class="k">)</span>.tar.gz
+</pre></div>
+</div>
+</section>
+<section id="source-recovery-preparation">
+<h2>Source Recovery &amp; Preparation<a class="headerlink" href="#source-recovery-preparation" title="Link to this heading">¶</a></h2>
+<p>From there, you can add the upstream source recovery.</p>
+<p>Using wget + checksum tool:</p>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="c"># example of source recovery url</span>
+<span class="nv">URL_SRC</span><span class="o">=</span><span class="k">$(</span>URL<span class="k">)</span>/archive/<span class="k">$(</span>VERSION<span class="k">)</span>.tar.gz
+
+<span class="c"># Basic source archive recovery,</span>
+<span class="c"># this works fine if upstream is clean</span>
+<span class="nf">$(SOURCE_ARCHIVE)</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">SOURCE_DIR</span><span class="k">)</span> <span class="k">$(</span><span class="nv">CACHE</span><span class="k">)</span> <span class="n">Makefile</span> <span class="n">MANIFEST</span>
+<span class="w">    </span><span class="k">$(</span>WGS<span class="k">)</span><span class="w"> </span>-u<span class="w"> </span><span class="k">$(</span>URL_SRC<span class="k">)</span><span class="w"> </span>-o<span class="w"> </span><span class="k">$(</span>SOURCE_ARCHIVE<span class="k">)</span>
+</pre></div>
+</div>
+<p>Using git + checksum tool:</p>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nv">URL</span><span class="o">=</span>https://github.com/kakwa/mk-sh-skel
+
+<span class="nv">REVISION</span><span class="o">=</span>dac9e68d96d5d7de9854728dd08f7824d1376eb2
+
+<span class="c"># Example of simple recovery, with good upstream</span>
+<span class="nf">$(SOURCE_ARCHIVE)</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">SOURCE_DIR</span><span class="k">)</span> <span class="k">$(</span><span class="nv">CACHE</span><span class="k">)</span> <span class="n">Makefile</span> <span class="n">MANIFEST</span>
+<span class="w">    </span><span class="k">$(</span>GS<span class="k">)</span><span class="w"> </span>-u<span class="w"> </span><span class="k">$(</span>URL<span class="k">)</span><span class="w"> </span>-o<span class="w"> </span><span class="k">$(</span>SOURCE_ARCHIVE<span class="k">)</span><span class="w"> </span>-r<span class="w"> </span><span class="k">$(</span>REVISION<span class="k">)</span>
+</pre></div>
+</div>
+<p>It is also possible to manually tweak the archive if necessary (leveraging <code class="docutils literal notranslate"><span class="pre">$(SOURCE_DIR)</span></code> and <code class="docutils literal notranslate"><span class="pre">$(SOURCE_TAR_CMD)</span></code>):</p>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="c"># Example of upstream debian/ packaging removal</span>
+<span class="nf">$(SOURCE_ARCHIVE)</span><span class="o">:</span><span class="w"> </span><span class="k">$(</span><span class="nv">SOURCE_DIR</span><span class="k">)</span> <span class="k">$(</span><span class="nv">CACHE</span><span class="k">)</span> <span class="n">Makefile</span> <span class="n">MANIFEST</span>
+<span class="w">    </span><span class="k">$(</span>WGS<span class="k">)</span><span class="w"> </span>-u<span class="w"> </span><span class="k">$(</span>URL_SRC<span class="k">)</span><span class="w"> </span>-o<span class="w"> </span><span class="k">$(</span>BUILD_DIR<span class="k">)</span>/<span class="k">$(</span>NAME<span class="k">)</span>-<span class="k">$(</span>VERSION<span class="k">)</span>.tar.gz
+<span class="w">    </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>BUILD_DIR<span class="k">)</span>/tmp
+<span class="w">    </span>tar<span class="w"> </span>-vxf<span class="w"> </span><span class="k">$(</span>BUILD_DIR<span class="k">)</span>/<span class="k">$(</span>NAME<span class="k">)</span>-<span class="k">$(</span>VERSION<span class="k">)</span>.tar.gz<span class="w"> </span>-C<span class="w"> </span><span class="k">$(</span>BUILD_DIR<span class="k">)</span>/tmp
+<span class="w">    </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="k">$(</span>BUILD_DIR<span class="k">)</span>/tmp/<span class="k">$(</span>NAME<span class="k">)</span>-<span class="k">$(</span>VERSION<span class="k">)</span>/debian
+<span class="w">    </span>mv<span class="w"> </span><span class="k">$(</span>BUILD_DIR<span class="k">)</span>/tmp/<span class="k">$(</span>NAME<span class="k">)</span>-<span class="k">$(</span>VERSION<span class="k">)</span>/*<span class="w"> </span><span class="k">$(</span>SOURCE_DIR<span class="k">)</span>
+<span class="w">    </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="k">$(</span>BUILD_DIR<span class="k">)</span>/tmp
+<span class="w">    </span>rm<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>BUILD_DIR<span class="k">)</span>/<span class="k">$(</span>NAME<span class="k">)</span>-<span class="k">$(</span>VERSION<span class="k">)</span>.tar.gz
+<span class="w">    </span><span class="k">$(</span>SOURCE_TAR_CMD<span class="k">)</span>
 </pre></div>
 </div>
 </section>
 <section id="generating-the-manifest">
 <h2>Generating the MANIFEST<a class="headerlink" href="#generating-the-manifest" title="Link to this heading">¶</a></h2>
-<p>After configuring the Makefile, generate the MANIFEST file:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>foo/
-make<span class="w"> </span>manifest
+<p>After configuring the Makefile, and whenever you update the upstream version, (re)generate the MANIFEST file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>manifest
 </pre></div>
 </div>
-<p>This downloads the upstream source and creates a MANIFEST file with checksums.</p>
-</section>
-<section id="distribution-specific-configuration">
-<h2>Distribution-Specific Configuration<a class="headerlink" href="#distribution-specific-configuration" title="Link to this heading">¶</a></h2>
-<section id="debian-packaging">
-<h3>Debian Packaging<a class="headerlink" href="#debian-packaging" title="Link to this heading">¶</a></h3>
-<p>Edit the following files:</p>
-<ul class="simple">
-<li><p><strong>debian/control</strong>: Package metadata and dependencies</p></li>
-<li><p><strong>debian/rules</strong>: Build instructions</p></li>
-<li><p><strong>debian/copyright</strong>: Copyright and license information</p></li>
-</ul>
-</section>
-<section id="rpm-packaging">
-<h3>RPM Packaging<a class="headerlink" href="#rpm-packaging" title="Link to this heading">¶</a></h3>
-<p>Edit the <strong>rpm/component.spec</strong> file to configure:</p>
-<ul class="simple">
-<li><p>Package metadata</p></li>
-<li><p>Build and runtime dependencies</p></li>
-<li><p>Build instructions</p></li>
-<li><p>Installation steps</p></li>
-<li><p>File ownership</p></li>
-</ul>
-</section>
-</section>
-<section id="building-the-package">
-<h2>Building the Package<a class="headerlink" href="#building-the-package" title="Link to this heading">¶</a></h2>
-<p>After configuration, build the package:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build DEB package</span>
-make<span class="w"> </span>deb
-
-<span class="c1"># Build RPM package</span>
-make<span class="w"> </span>rpm
-
-<span class="c1"># Build in chroot for specific distribution</span>
-make<span class="w"> </span>deb_chroot<span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>bullseye
-make<span class="w"> </span>rpm_chroot<span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>el9
+<p>This downloads the upstream source and creates a MANIFEST file with checksums to ensure upstream is not doing something iffy.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case of checksum error, an error like the following one will be displayed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>ERROR<span class="o">]</span><span class="w"> </span>Bad<span class="w"> </span>checksum<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="s1">&#39;https://github.com/kakwa/mk-sh-skel/archive/1.0.0.tar.gz&#39;</span>
+expected:<span class="w"> </span>2cdeaa0cd4ddf624b5bc7ka5dbdeb4c3dbe77df09eb58bac7621ee7b
+got:<span class="w">      </span>1cdea044ddf624b5bc7465dbdeb4c3dbe77df09eb58bac7621ee7b64
+Makefile:38:<span class="w"> </span>recipe<span class="w"> </span><span class="k">for</span><span class="w"> </span>target<span class="w"> </span><span class="s1">&#39;builddir/mk-sh-skel_1.0.0.orig.tar.gz&#39;</span><span class="w"> </span>failed
+make:<span class="w"> </span>***<span class="w"> </span><span class="o">[</span>builddir/mk-sh-skel_1.0.0.orig.tar.gz<span class="o">]</span><span class="w"> </span>Error<span class="w"> </span><span class="m">1</span>
 </pre></div>
 </div>
+</div>
+</section>
+<section id="skipping-version">
+<h2>Skipping Version<a class="headerlink" href="#skipping-version" title="Link to this heading">¶</a></h2>
+<p>To skip certain versions:</p>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="c"># Skip builds for Debian &lt; 9, All RHEL versions, Fedora &gt; 40, Ubuntu &lt;= 18.4</span>
+<span class="nv">SKIP</span><span class="o">=</span>&lt;:deb:9<span class="w"> </span>&gt;<span class="o">=</span>:el:0<span class="w"> </span>&gt;:fc:40<span class="w"> </span>&lt;<span class="o">=</span>:ubu:18.4
+</pre></div>
+</div>
+</section>
+<section id="version-specific-packaging">
+<h2>Version Specific Packaging<a class="headerlink" href="#version-specific-packaging" title="Link to this heading">¶</a></h2>
+<p>If necessary, you can override any packaging file on a per distribution basis. Simply use the <code class="docutils literal notranslate"><span class="pre">&lt;FILE&gt;.dist.&lt;DIST&gt;</span></code> to override a default <code class="docutils literal notranslate"><span class="pre">&lt;FILE&gt;</span></code>.</p>
+<p>For example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>debian/control<span class="w">             </span><span class="c1"># will be used as default</span>
+debian/control.dist.buster<span class="w"> </span><span class="c1"># will be used if build is called with DIST=buster</span>
+</pre></div>
+</div>
+</section>
+<section id="distribution-specific-packaging">
+<h2>Distribution-Specific Packaging<a class="headerlink" href="#distribution-specific-packaging" title="Link to this heading">¶</a></h2>
+<p>Past this point, the packaging is pretty much .deb or .rpm vanilla packaging (with a bit of templating).</p>
+<p>Just follow the packaging documentation of each distribution:</p>
+</section>
+<section id="id1">
+<h2>Distribution-Specific Packaging<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>Past this point, the packaging is pretty much .deb or .rpm vanilla packaging (with a bit of templating).</p>
+<p>Just follow the packaging documentation of each distribution &amp; the usual standards:</p>
+<ul class="simple">
+<li><p><strong>Filesystem Layout</strong>: <a class="reference external" href="https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard">Filesystem Hierarchy Standard</a></p></li>
+<li><p><strong>Debian Reference</strong>: <a class="reference external" href="https://www.debian.org/doc/debian-policy/index.html">Debian Policy Manual</a></p></li>
+<li><p><strong>Debian/Ubuntu (.deb) Packaging</strong>: <a class="reference external" href="https://www.debian.org/doc/manuals/maint-guide/">Debian New Maintainers’ Guide</a></p></li>
+<li><p><strong>Fedora/RHEL/CentOS (.rpm) Packaging</strong>: <a class="reference external" href="https://docs.fedoraproject.org/en-US/packaging-guidelines/">Fedora Packaging Guidelines</a></p></li>
+<li><p><strong>openSUSE (.rpm) Packaging</strong>: <a class="reference external" href="https://en.opensuse.org/Portal:Packaging">openSUSE Packaging Guide</a></p></li>
+</ul>
 </section>
 </section>
 
@@ -414,14 +457,13 @@ make<span class="w"> </span>rpm_chroot<span class="w"> </span><span class="nv">D
 <li><a class="reference internal" href="#">Package Creation</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#initializing-a-package">Initializing a Package</a></li>
-<li><a class="reference internal" href="#configuring-the-makefile">Configuring the Makefile</a></li>
+<li><a class="reference internal" href="#package-metadata">Package Metadata</a></li>
+<li><a class="reference internal" href="#source-recovery-preparation">Source Recovery &amp; Preparation</a></li>
 <li><a class="reference internal" href="#generating-the-manifest">Generating the MANIFEST</a></li>
-<li><a class="reference internal" href="#distribution-specific-configuration">Distribution-Specific Configuration</a><ul>
-<li><a class="reference internal" href="#debian-packaging">Debian Packaging</a></li>
-<li><a class="reference internal" href="#rpm-packaging">RPM Packaging</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#building-the-package">Building the Package</a></li>
+<li><a class="reference internal" href="#skipping-version">Skipping Version</a></li>
+<li><a class="reference internal" href="#version-specific-packaging">Version Specific Packaging</a></li>
+<li><a class="reference internal" href="#distribution-specific-packaging">Distribution-Specific Packaging</a></li>
+<li><a class="reference internal" href="#id1">Distribution-Specific Packaging</a></li>
 </ul>
 </li>
 </ul>

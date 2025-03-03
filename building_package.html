@@ -258,9 +258,11 @@ the <cite>make deb</cite> or <cite>make rpm</cite> targets provided you have the
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>&lt;package-directory&gt;
 make<span class="w"> </span>rpm_chroot<span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>el9<span class="w">  </span><span class="c1"># Replace with target</span>
 
-<span class="c1"># Results:</span>
-ls<span class="w"> </span>out/<span class="w">           </span><span class="c1"># Binary package</span>
-ls<span class="w"> </span>src-out/<span class="w">       </span><span class="c1"># Source package</span>
+tree<span class="w"> </span>*out
+out
+└──<span class="w"> </span>mk-sh-skel-0.0.1-1.amk+el9.noarch.rpm
+src-out
+└──<span class="w"> </span>mk-sh-skel-0.0.1-1.amk+el9.src.rpm
 </pre></div>
 </div>
 </section>
@@ -269,9 +271,16 @@ ls<span class="w"> </span>src-out/<span class="w">       </span><span class="c1"
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>&lt;package-directory&gt;
 make<span class="w"> </span>deb_chroot<span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>bullseye<span class="w">  </span><span class="c1"># Replace with target</span>
 
-<span class="c1"># Results:</span>
-ls<span class="w"> </span>out/<span class="w">           </span><span class="c1"># Binary package</span>
-ls<span class="w"> </span>src-out/<span class="w">       </span><span class="c1"># Source package</span>
+tree<span class="w"> </span>*out
+out
+└──<span class="w"> </span>mk-sh-skel_0.0.1-1~amk+deb13_all.deb
+src-out
+├──<span class="w"> </span>mk-sh-skel_0.0.1-1~amk+deb13_amd64.buildinfo
+├──<span class="w"> </span>mk-sh-skel_0.0.1-1~amk+deb13_amd64.changes
+├──<span class="w"> </span>mk-sh-skel_0.0.1-1~amk+deb13.debian.tar.xz
+├──<span class="w"> </span>mk-sh-skel_0.0.1-1~amk+deb13.dsc
+├──<span class="w"> </span>mk-sh-skel_0.0.1-1~amk+deb13_source.changes
+└──<span class="w"> </span>mk-sh-skel_0.0.1.orig.tar.gz
 </pre></div>
 </div>
 </section>

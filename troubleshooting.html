@@ -254,6 +254,9 @@
 <p>If you want to avoid password promt add the following line to the sudoers configuration:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># replace build-user with the user used to generate the packages</span>
 build-user<span class="w"> </span><span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span><span class="w"> </span>NOPASSWD:<span class="w"> </span>/usr/sbin/cowbuilder
+build-user<span class="w"> </span><span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span><span class="w"> </span>NOPASSWD:<span class="w"> </span>/usr/sbin/mock
+build-user<span class="w"> </span><span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span><span class="w"> </span>NOPASSWD:<span class="w"> </span>/usr/bin/mkdir<span class="w"> </span>-p<span class="w"> </span>/var/cache/pbuilder/*
+build-user<span class="w"> </span><span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span><span class="w"> </span>NOPASSWD:<span class="w"> </span>/usr/bin/rm<span class="w"> </span>-rf<span class="w"> </span>--<span class="w"> </span>/var/cache/pbuilder/*
 </pre></div>
 </div>
 </section>
