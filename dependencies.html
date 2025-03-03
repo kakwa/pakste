@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Build Dependencies" href="dependencies.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Package Creation" href="packaging.html" /><link rel="prev" title="Pakste" href="index.html" />
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>pakste 0.1.0 documentation</title>
+        <title>Build Dependencies - pakste 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
@@ -166,7 +166,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="#"><div class="brand">pakste 0.1.0 documentation</div></a>
+      <a href="index.html"><div class="brand">pakste 0.1.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -178,7 +178,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -187,7 +187,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
   <span class="sidebar-brand-text">pakste 0.1.0 documentation</span>
@@ -198,8 +198,8 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
-<li class="toctree-l1"><a class="reference internal" href="dependencies.html">Build Dependencies</a></li>
+  <ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Build Dependencies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="packaging.html">Package Creation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="building_package.html">Building Packages</a></li>
 <li class="toctree-l1"><a class="reference internal" href="building_repo.html">Repository</a></li>
@@ -225,7 +225,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/index.rst.txt" title="View this page">
+  <a class="muted-link" href="_sources/dependencies.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -239,143 +239,38 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="pakste">
-<h1>Pakste<a class="headerlink" href="#pakste" title="Link to this heading">¶</a></h1>
-<a class="reference external image-reference" href="https://kakwa.github.io/pakste/"><img alt="Documentation" src="https://github.com/kakwa/pakste/actions/workflows/docs.yml/badge.svg" />
-</a>
-<p>A Makefile-based packaging framework for building DEB and RPM package repositories.</p>
-<div class="table-wrapper colwidths-given docutils container">
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p>Documentation</p></td>
-<td><p><a class="reference external" href="https://kakwa.github.io/pakste/">GitHub Pages</a></p></td>
-</tr>
-<tr class="row-even"><td><p>Repository</p></td>
-<td><p><a class="reference external" href="https://github.com/kakwa/pakste">GitHub</a></p></td>
-</tr>
-<tr class="row-odd"><td><p>Author</p></td>
-<td><p>kakwalab ©</p></td>
-</tr>
-</tbody>
-</table>
+          <section id="build-dependencies">
+<h1>Build Dependencies<a class="headerlink" href="#build-dependencies" title="Link to this heading">¶</a></h1>
+<p>Install the required packaging tools for your distribution.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If building locally (<cite>make rpm</cite> or <cite>make deb</cite>) you also need to install the build dependencies.</p>
 </div>
-</section>
-<section id="table-of-content">
-<h1>Table Of Content<a class="headerlink" href="#table-of-content" title="Link to this heading">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="dependencies.html">Build Dependencies</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dependencies.html#debian-ubuntu">Debian/Ubuntu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dependencies.html#rhel-centos-fedora">RHEL/CentOS/Fedora</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dependencies.html#to-build-cross-arch">To build cross-arch</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="packaging.html">Package Creation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#initializing-a-package">Initializing a Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#configuring-the-makefile">Configuring the Makefile</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#generating-the-manifest">Generating the MANIFEST</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#distribution-specific-configuration">Distribution-Specific Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="packaging.html#building-the-package">Building the Package</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="building_package.html">Building Packages</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="building_package.html#building-rpm-packages">Building .rpm Packages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="building_package.html#building-deb-packages">Building .deb Packages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="building_package.html#clean">Clean</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="building_repo.html">Repository</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="building_repo.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="building_repo.html#gpg-key">GPG Key</a></li>
-<li class="toctree-l2"><a class="reference internal" href="building_repo.html#building-repositories">Building Repositories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="building_repo.html#publishing-repositories">Publishing Repositories</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="targets.html">Makefile Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="targets.html#package-initialization">Package Initialization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="targets.html#common-targets">Common Targets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="targets.html#package-building-targets">Package Building Targets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="targets.html#repository-targets">Repository Targets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="targets.html#examples">Examples</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Optional Setup &amp; Troubleshooting</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#sudoers-configuration">Sudoers Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#repository-key-issues">Repository Key Issues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#tmpfs">Tmpfs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#building-on-old-distributions">Building on old distributions</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</section>
-<section id="quick-reference">
-<h1>Quick Reference<a class="headerlink" href="#quick-reference" title="Link to this heading">¶</a></h1>
-<section id="package-creation">
-<h2>Package Creation<a class="headerlink" href="#package-creation" title="Link to this heading">¶</a></h2>
-<p>Initialize and configure a new package:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./common/init_pkg.sh<span class="w"> </span>-n<span class="w"> </span>foo
-<span class="nb">cd</span><span class="w"> </span>foo/
-</pre></div>
-</div>
-<p>Setup source recovery &amp; metadata:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vim<span class="w"> </span>Makefile
-make<span class="w"> </span>manifest
-</pre></div>
-</div>
-<p>Package setup:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># .deb packaging</span>
-vim<span class="w"> </span>debian/rules<span class="w"> </span>debian/control
-
-<span class="c1"># .rpm packaging</span>
-vim<span class="w"> </span>rpm/component.spec
+<section id="debian-ubuntu">
+<h2>Debian/Ubuntu<a class="headerlink" href="#debian-ubuntu" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>install<span class="w"> </span>make<span class="w"> </span>debhelper<span class="w"> </span>reprepro<span class="w"> </span>cowbuilder<span class="w"> </span>wget
 </pre></div>
 </div>
 </section>
-<section id="building-packages">
-<h2>Building Packages<a class="headerlink" href="#building-packages" title="Link to this heading">¶</a></h2>
-<p>Build packages in clean, isolated chroot environments:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>foo/
+<section id="rhel-centos-fedora">
+<h2>RHEL/CentOS/Fedora<a class="headerlink" href="#rhel-centos-fedora" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dnf<span class="w"> </span>install<span class="w"> </span>make<span class="w"> </span>rpm-sign<span class="w"> </span>expect<span class="w"> </span>rpm-build<span class="w"> </span>createrepo<span class="w"> </span>mock<span class="w"> </span>wget
 </pre></div>
 </div>
-<p><cite>.deb</cite> package:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>deb_chroot<span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>trixie<span class="w"> </span><span class="c1"># ARCH=arm64</span>
-</pre></div>
-</div>
-<p><cite>.rpm</cite> package:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>rpm_chroot<span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>el9<span class="w"> </span><span class="c1"># ARCH=aarch64</span>
-</pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>rpm build tools are also available <a class="reference external" href="https://github.com/kakwa/debian-rpm-build-tools?tab=readme-ov-file#repository">here for Debian/Ubuntu</a></p>
 </div>
 </section>
-<section id="repository-management">
-<h2>Repository Management<a class="headerlink" href="#repository-management" title="Link to this heading">¶</a></h2>
-<p>One time setup:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># One-time GPG setup for signing packages</span>
-gpg<span class="w"> </span>--gen-key
-
-<span class="c1"># Configure repository settings</span>
-vim<span class="w"> </span>Makefile.config
-</pre></div>
-</div>
-<p>Build repositories (use -j N for parallel builds):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># From the root of the repository</span>
-
-<span class="c1"># Debian repository</span>
-make<span class="w"> </span>deb_repo<span class="w"> </span>-j<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>trixie
-
-<span class="c1"># RPM repository</span>
-make<span class="w"> </span>rpm_repo<span class="w"> </span>-j<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>el9
+<section id="to-build-cross-arch">
+<h2>To build cross-arch<a class="headerlink" href="#to-build-cross-arch" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt<span class="w"> </span>install<span class="w"> </span>binfmt-support<span class="w"> </span>qemu<span class="w"> </span>qemu-system-arm
 </pre></div>
 </div>
 </section>
@@ -386,16 +281,26 @@ make<span class="w"> </span>rpm_repo<span class="w"> </span>-j<span class="w"> <
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="dependencies.html">
+          <a class="next-page" href="packaging.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Build Dependencies</div>
+                <div class="title">Package Creation</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -415,8 +320,29 @@ make<span class="w"> </span>rpm_repo<span class="w"> </span>-j<span class="w"> <
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Build Dependencies</a><ul>
+<li><a class="reference internal" href="#debian-ubuntu">Debian/Ubuntu</a></li>
+<li><a class="reference internal" href="#rhel-centos-fedora">RHEL/CentOS/Fedora</a></li>
+<li><a class="reference internal" href="#to-build-cross-arch">To build cross-arch</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

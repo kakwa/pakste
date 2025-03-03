@@ -199,10 +199,12 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">Build Dependencies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="packaging.html">Package Creation</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Building Packages</a></li>
 <li class="toctree-l1"><a class="reference internal" href="building_repo.html">Repository</a></li>
 <li class="toctree-l1"><a class="reference internal" href="targets.html">Makefile Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Optional Setup &amp; Troubleshooting</a></li>
 </ul>
 
 </div>
@@ -251,8 +253,8 @@
 <p>You can also build packages locally on the host system using
 the <cite>make deb</cite> or <cite>make rpm</cite> targets provided you have the necessary build dependencies installed.</p>
 </div>
-<section id="rpm-packages">
-<h2>.rpm Packages<a class="headerlink" href="#rpm-packages" title="Link to this heading">¶</a></h2>
+<section id="building-rpm-packages">
+<h2>Building .rpm Packages<a class="headerlink" href="#building-rpm-packages" title="Link to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>&lt;package-directory&gt;
 make<span class="w"> </span>rpm_chroot<span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>el9<span class="w">  </span><span class="c1"># Replace with target</span>
 
@@ -262,8 +264,8 @@ ls<span class="w"> </span>src-out/<span class="w">       </span><span class="c1"
 </pre></div>
 </div>
 </section>
-<section id="deb-packages">
-<h2>.deb Packages<a class="headerlink" href="#deb-packages" title="Link to this heading">¶</a></h2>
+<section id="building-deb-packages">
+<h2>Building .deb Packages<a class="headerlink" href="#building-deb-packages" title="Link to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>&lt;package-directory&gt;
 make<span class="w"> </span>deb_chroot<span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>bullseye<span class="w">  </span><span class="c1"># Replace with target</span>
 
@@ -282,53 +284,6 @@ make<span class="w"> </span>clean
 make<span class="w"> </span>clean<span class="w"> </span><span class="nv">KEEP_CACHE</span><span class="o">=</span><span class="nb">true</span>
 </pre></div>
 </div>
-</section>
-<section id="optional-setup">
-<h2>Optional Setup<a class="headerlink" href="#optional-setup" title="Link to this heading">¶</a></h2>
-<section id="sudoers-configuration">
-<h3>Sudoers Configuration<a class="headerlink" href="#sudoers-configuration" title="Link to this heading">¶</a></h3>
-<p>Building in chroot requires root permission.</p>
-<p>If <strong>make deb_chroot</strong> is run as a standard user, <strong>sudo</strong> will be used for cowbuilder calls.</p>
-<p>If you want to avoid password promt add the following line to the sudoers configuration:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># replace build-user with the user used to generate the packages</span>
-build-user<span class="w"> </span><span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span><span class="w"> </span>NOPASSWD:<span class="w"> </span>/usr/sbin/cowbuilder
-</pre></div>
-</div>
-</section>
-<section id="signing-keys">
-<h3>Signing keys<a class="headerlink" href="#signing-keys" title="Link to this heading">¶</a></h3>
-<p>Cowbuilder requires the GPG keys of the targeted DIST.</p>
-<p>If you get errors like <cite>E: Release signed by unknown key (key id EF0F382A1A7B6500)</cite>, try installing the keyrings:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>ubuntu-keyring<span class="w"> </span>debian-archive-keyring<span class="w"> </span>ubuntu-archive-keyring<span class="w"> </span>debian-keyring
-</pre></div>
-</div>
-</section>
-</section>
-<section id="tmpfs-ramfs">
-<h2>TMPFS/RAMFS<a class="headerlink" href="#tmpfs-ramfs" title="Link to this heading">¶</a></h2>
-<p>If you have RAM to spare, using tmpfs mounts can significantly accelerate the build process.</p>
-<p>One-time mount:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mount tmpfs (as root)</span>
-mount<span class="w"> </span>-t<span class="w"> </span>tmpfs<span class="w"> </span>-o<span class="w"> </span><span class="nv">size</span><span class="o">=</span>16G<span class="w"> </span>tmpfs<span class="w"> </span>/var/cache/pbuilder/<span class="w">   </span><span class="c1"># For cowbuilder/DEB builds</span>
-mount<span class="w"> </span>-t<span class="w"> </span>tmpfs<span class="w"> </span>-o<span class="w"> </span><span class="nv">size</span><span class="o">=</span>16G<span class="w"> </span>tmpfs<span class="w"> </span>/var/lib/mock<span class="w">          </span><span class="c1"># For mock/RPM builds</span>
-</pre></div>
-</div>
-<p>fstab:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Or add to /etc/fstab for persistence</span>
-tmpfs<span class="w"> </span>/var/cache/pbuilder/<span class="w"> </span>tmpfs<span class="w"> </span>defaults,size<span class="o">=</span>16G<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w">    </span><span class="c1"># For combuilder/DEB builds</span>
-tmpfs<span class="w"> </span>/var/lib/mock<span class="w"> </span>tmpfs<span class="w"> </span>defaults,size<span class="o">=</span>16G<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w">           </span><span class="c1"># For mock/RPM builds</span>
-</pre></div>
-</div>
-</section>
-<section id="building-for-fossil-distributions">
-<h2>Building for fossil distributions<a class="headerlink" href="#building-for-fossil-distributions" title="Link to this heading">¶</a></h2>
-<p>Modern distributions disable the syscall <strong>vsyscall</strong> used by older libc versions (RHEL &lt;= 6, Debian &lt;= 7).</p>
-<p>You will see  errors like the following in <strong>dmesg</strong>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span><span class="w">  </span><span class="m">578</span>.456176<span class="o">]</span><span class="w"> </span>sh<span class="o">[</span><span class="m">15402</span><span class="o">]</span>:<span class="w"> </span>vsyscall<span class="w"> </span>attempted<span class="w"> </span>with<span class="w"> </span><span class="nv">vsyscall</span><span class="o">=</span>none<span class="w"> </span>ip:ffffffffff600400<span class="w"> </span>cs:33<span class="w"> </span>sp:7ffd469c5aa8<span class="w"> </span>ax:ffffffffff600400<span class="w"> </span>si:7ffd469c6f23<span class="w"> </span>di:0
-<span class="o">[</span><span class="w">  </span><span class="m">578</span>.456180<span class="o">]</span><span class="w"> </span>sh<span class="o">[</span><span class="m">15402</span><span class="o">]</span>:<span class="w"> </span>segfault<span class="w"> </span>at<span class="w"> </span>ffffffffff600400<span class="w"> </span>ip<span class="w"> </span>ffffffffff600400<span class="w"> </span>sp<span class="w"> </span>00007ffd469c5aa8<span class="w"> </span>error<span class="w"> </span><span class="m">15</span>
-</pre></div>
-</div>
-<p>To work around this issue, add the <strong>vsyscall=emulate</strong> option in the kernel command line.</p>
 </section>
 </section>
 
@@ -389,16 +344,9 @@ tmpfs<span class="w"> </span>/var/lib/mock<span class="w"> </span>tmpfs<span cla
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Building Packages</a><ul>
-<li><a class="reference internal" href="#rpm-packages">.rpm Packages</a></li>
-<li><a class="reference internal" href="#deb-packages">.deb Packages</a></li>
+<li><a class="reference internal" href="#building-rpm-packages">Building .rpm Packages</a></li>
+<li><a class="reference internal" href="#building-deb-packages">Building .deb Packages</a></li>
 <li><a class="reference internal" href="#clean">Clean</a></li>
-<li><a class="reference internal" href="#optional-setup">Optional Setup</a><ul>
-<li><a class="reference internal" href="#sudoers-configuration">Sudoers Configuration</a></li>
-<li><a class="reference internal" href="#signing-keys">Signing keys</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#tmpfs-ramfs">TMPFS/RAMFS</a></li>
-<li><a class="reference internal" href="#building-for-fossil-distributions">Building for fossil distributions</a></li>
 </ul>
 </li>
 </ul>

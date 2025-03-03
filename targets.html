@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Repository" href="building_repo.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Optional Setup &amp; Troubleshooting" href="troubleshooting.html" /><link rel="prev" title="Repository" href="building_repo.html" />
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Makefile Reference - pakste 0.1.0 documentation</title>
@@ -199,10 +199,12 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dependencies.html">Build Dependencies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="packaging.html">Package Creation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="building_package.html">Building Packages</a></li>
 <li class="toctree-l1"><a class="reference internal" href="building_repo.html">Repository</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Makefile Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Optional Setup &amp; Troubleshooting</a></li>
 </ul>
 
 </div>
@@ -245,7 +247,7 @@
         <article role="main" id="furo-main-content">
           <section id="makefile-reference">
 <h1>Makefile Reference<a class="headerlink" href="#makefile-reference" title="Link to this heading">¶</a></h1>
-<p>This page documents the main Makefile targets and variables available in Pakste.</p>
+<p>This page documents the main Makefile targets and variables available in Pakste at the individual package level and the repo level.</p>
 <section id="package-initialization">
 <h2>Package Initialization<a class="headerlink" href="#package-initialization" title="Link to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize a new package</span>
@@ -258,19 +260,23 @@
 <div class="table-wrapper colwidths-given docutils container">
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 25.0%" />
-<col style="width: 75.0%" />
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 65.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Target</p></th>
+<th class="head"><p>Level</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">help</span></code></p></td>
+<td><p>package &amp; repo/root</p></td>
 <td><p>Display available targets and their descriptions</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">clean</span></code></p></td>
+<td><p>package &amp; repo/root</p></td>
 <td><p>Remove all build artifacts and directories</p></td>
 </tr>
 </tbody>
@@ -303,28 +309,35 @@
 <div class="table-wrapper colwidths-given docutils container">
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 25.0%" />
-<col style="width: 75.0%" />
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 65.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Target</p></th>
+<th class="head"><p>Level</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">manifest</span></code></p></td>
+<td><p>package</p></td>
 <td><p>Create or update the MANIFEST file with source archive checksums</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">deb</span></code></p></td>
+<td><p>package</p></td>
 <td><p>Build DEB package locally (requires build dependencies)</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rpm</span></code></p></td>
+<td><p>package</p></td>
 <td><p>Build RPM package locally (requires build dependencies)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">deb_chroot</span></code></p></td>
+<td><p>package &amp; repo/root</p></td>
 <td><p>Build DEB package in a clean chroot environment</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rpm_chroot</span></code></p></td>
+<td><p>package &amp; repo/root</p></td>
 <td><p>Build RPM package in a clean chroot environment</p></td>
 </tr>
 </tbody>
@@ -349,8 +362,8 @@
 <td><p>Target distribution codename (e.g., bullseye, el9)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ARCH</span></code></p></td>
-<td><p>host arch</p></td>
-<td><p>Target Architecture</p></td>
+<td><p>host architecture</p></td>
+<td><p>Target Architecture (e.g., arm64, riscv64, amd64)</p></td>
 </tr>
 </tbody>
 </table>
@@ -361,20 +374,24 @@
 <div class="table-wrapper colwidths-given docutils container">
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 25.0%" />
-<col style="width: 75.0%" />
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 65.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Target</p></th>
+<th class="head"><p>Level</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">deb_repo</span></code></p></td>
-<td><p>Build a complete DEB repository for a distribution</p></td>
+<td><p>repo/root</p></td>
+<td><p>Build a complete .deb repository for a distribution &amp; architecture</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rpm_repo</span></code></p></td>
-<td><p>Build a complete RPM repository for a distribution</p></td>
+<td><p>repo/root</p></td>
+<td><p>Build a complete .rpm repository for a distribution &amp; architecture</p></td>
 </tr>
 </tbody>
 </table>
@@ -398,8 +415,8 @@
 <td><p>Target distribution codename (e.g., bullseye, el9)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ARCH</span></code></p></td>
-<td><p>host arch</p></td>
-<td><p>Target Architecture</p></td>
+<td><p>host architecture</p></td>
+<td><p>Target Architecture (e.g., arm64, riscv64, amd64)</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR</span></code></p></td>
 <td><p><em>none</em></p></td>
@@ -435,7 +452,15 @@ make<span class="w"> </span>clean<span class="w"> </span><span class="nv">KEEP_C
       <footer>
         
         <div class="related-pages">
-          
+          <a class="next-page" href="troubleshooting.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Optional Setup &amp; Troubleshooting</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
           <a class="prev-page" href="building_repo.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
