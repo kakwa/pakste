@@ -330,9 +330,8 @@
 <section id="repository-initialization">
 <h2>Repository Initialization<a class="headerlink" href="#repository-initialization" title="Link to this heading">¶</a></h2>
 <p>Create a bare repo and run the following:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set with the bar</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set with your bare git repository uri</span>
 <span class="nv">REPO_URL</span><span class="o">=</span>git@github.com:user/your-awesome-packages
-
 
 <span class="nv">REPO_DIR</span><span class="o">=</span><span class="k">$(</span>basename<span class="w"> </span><span class="si">${</span><span class="nv">REPO_URL</span><span class="si">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/\.git$//&#39;</span><span class="k">)</span>
 
@@ -347,6 +346,7 @@ git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </
 </div>
 <p>Updating pakste:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>pakste-upstream<span class="w"> </span>https://github.com/kakwa/pakste
+git<span class="w"> </span>fetch<span class="w"> </span>pakste-upstream
 git<span class="w"> </span>merge<span class="w"> </span>pakste-upstream/main
 </pre></div>
 </div>
