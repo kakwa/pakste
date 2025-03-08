@@ -387,11 +387,23 @@
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">deb_repo</span></code></p></td>
 <td><p>repo/root</p></td>
-<td><p>Build a complete .deb repository for a distribution &amp; architecture</p></td>
+<td><p>Build .deb repository for a specific distribution &amp; architecture</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">rpm_repo</span></code></p></td>
 <td><p>repo/root</p></td>
-<td><p>Build a complete .rpm repository for a distribution &amp; architecture</p></td>
+<td><p>Build .rpm repository for a specific distribution &amp; architecture</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rpm_all_repos</span></code></p></td>
+<td><p>repo/root</p></td>
+<td><p>Build all .rpm repositories for all targets (see RPM_ALL_TARGETS in Makefile.config)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">deb_all_repos</span></code></p></td>
+<td><p>repo/root</p></td>
+<td><p>Build all .deb repositories for all targets (see DEB_ALL_TARGETS in Makefile.config)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">all_repos</span></code></p></td>
+<td><p>repo/root</p></td>
+<td><p>Build all .deb and .rpm repositories for all targets (default target)</p></td>
 </tr>
 </tbody>
 </table>
@@ -428,17 +440,29 @@
 </section>
 <section id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<p>In a package directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build a DEB package in a chroot for Debian Trixie &amp; arm64</span>
 make<span class="w"> </span>deb_chroot<span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>trixie<span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span>arm64
 
 <span class="c1"># Build an RPM package in a chroot for RHEL 9</span>
 make<span class="w"> </span>rpm_chroot<span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>el9
-
-<span class="c1"># Build a complete DEB repository with parallel jobs</span>
+</pre></div>
+</div>
+<p>At the root of the repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build a complete DEB repository with parallel jobs</span>
 make<span class="w"> </span>deb_repo<span class="w"> </span>-j4<span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>bullseye
 
 <span class="c1"># Build a complete RPM repository, continuing on errors</span>
 make<span class="w"> </span>rpm_repo<span class="w"> </span><span class="nv">DIST</span><span class="o">=</span>el9<span class="w"> </span><span class="nv">ERROR</span><span class="o">=</span>skip
+
+<span class="c1"># Build every deb targets</span>
+make<span class="w"> </span>deb_all_repos<span class="w"> </span>-j4
+
+<span class="c1"># Build every rpm targets</span>
+make<span class="w"> </span>rpm_all_repos<span class="w"> </span>-j4
+
+<span class="c1"># Build everything</span>
+make<span class="w"> </span>-j4
 
 <span class="c1"># Clean but keep downloaded sources</span>
 make<span class="w"> </span>clean<span class="w"> </span><span class="nv">KEEP_CACHE</span><span class="o">=</span><span class="nb">true</span>
@@ -482,7 +506,7 @@ make<span class="w"> </span>clean<span class="w"> </span><span class="nv">KEEP_C
             
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2025-03-06</div>
+              Last updated on 2025-03-08</div>
           </div>
           <div class="right-details">
             
