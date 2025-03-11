@@ -271,11 +271,13 @@
 <section id="to-build-cross-arch">
 <h2>To build cross-arch<a class="headerlink" href="#to-build-cross-arch" title="Link to this heading">¶</a></h2>
 <p>Debian/Ubuntu:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt<span class="w"> </span>install<span class="w"> </span>binfmt-support<span class="w"> </span>qemu<span class="w"> </span>qemu-system-arm<span class="w"> </span>qemu-system-riscv<span class="w"> </span><span class="c1"># customize with your arch</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># customize with your archs</span>
+apt<span class="w"> </span>install<span class="w"> </span>binfmt-support<span class="w"> </span>qemu-utils<span class="w"> </span>qemu-user-static<span class="w"> </span>qemu-system-arm<span class="w"> </span>qemu-system-misc
 </pre></div>
 </div>
 <p>RHEL/Rocky/Fedora:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dnf<span class="w"> </span>install<span class="w"> </span>qemu-user-binfmt<span class="w"> </span>qemu-system-riscv<span class="w"> </span>qemu-system-aarch64<span class="w"> </span><span class="c1"># customize with your arch</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># customize with your archs</span>
+dnf<span class="w"> </span>install<span class="w"> </span>qemu-user-binfmt<span class="w"> </span>qemu-system-riscv<span class="w"> </span>qemu-system-aarch64
 </pre></div>
 </div>
 </section>
@@ -316,7 +318,7 @@
             
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2025-03-08</div>
+              Last updated on 2025-03-11</div>
           </div>
           <div class="right-details">
             
