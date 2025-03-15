@@ -254,7 +254,7 @@
 </div>
 <section id="debian-ubuntu">
 <h2>Debian/Ubuntu<a class="headerlink" href="#debian-ubuntu" title="Link to this heading">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get<span class="w"> </span>install<span class="w"> </span>make<span class="w"> </span>debhelper<span class="w"> </span>reprepro<span class="w"> </span>cowbuilder<span class="w"> </span>wget
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt<span class="w"> </span>install<span class="w"> </span>make<span class="w"> </span>debhelper<span class="w"> </span>reprepro<span class="w"> </span>cowbuilder<span class="w"> </span>wget
 </pre></div>
 </div>
 </section>
@@ -266,6 +266,10 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>rpm build tools are also available <a class="reference external" href="https://github.com/kakwa/debian-rpm-build-tools?tab=readme-ov-file#repository">here for Debian/Ubuntu</a></p>
+<p>Configure the repository and install the packages:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt<span class="w"> </span>install<span class="w"> </span>mock<span class="w"> </span>createrepo-c<span class="w"> </span>rpm<span class="w"> </span>dnf<span class="w"> </span>gnupg2
+</pre></div>
+</div>
 </div>
 </section>
 <section id="to-build-cross-arch">
