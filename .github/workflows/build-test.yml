@@ -57,7 +57,7 @@ jobs:
  
       - name: Build package
         run: |
-          make ${{ matrix.type }}_chroot DIST=${{ matrix.dist }} -C testpackage/
+          make ${{ matrix.type }}_chroot DIST=${{ matrix.dist }} -C testpackage/ --trace
 
       - name: Check build artifacts
         run: |
@@ -65,7 +65,7 @@ jobs:
 
       - name: Build repository
         run: |
-          make ${{ matrix.type }}_repo DIST=${{ matrix.dist }} -C testpackage/
+          make ${{ matrix.type }}_repo DIST=${{ matrix.dist }} --trace
 
       - name: Check Repo
         run: |
