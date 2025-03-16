@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dist: [bookworm, trixie, el9]
+        dist: [trixie, el9]
         include:
           - dist: trixie
             type: deb
