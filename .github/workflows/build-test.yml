@@ -1,0 +1,85 @@
+name: Package Build Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  check_repo:
+    runs-on: ubuntu-latest
+    outputs:
+      is_main_repo: ${{ steps.check.outputs.is_main_repo }}
+    steps:
+      - id: check
+        run: |
+         if [[ "$GITHUB_REPOSITORY" == "kakwa/pakste" ]]; then
+           echo "is_main_repo=true" >> $GITHUB_OUTPUT
+         else
+           echo "is_main_repo=false" >> $GITHUB_OUTPUT
+         fi
+         echo "Repository: $GITHUB_REPOSITORY"   
+  build-test:
+    needs: check_repo
+    if: github.ref == 'refs/heads/main' && needs.check_repo.outputs.is_main_repo == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dist: [bookworm, trixie, el9]
+        include:
+          - dist: trixie
+            type: deb
+          - dist: el9
+            type: rpm
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up environment
+        run: |
+          sudo apt-get update
+          
+          # Install Debian/Ubuntu tools
+          sudo apt-get install -y make debhelper reprepro cowbuilder wget
+          
+          # Install RPM tools for Debian
+          . /etc/os-release
+          wget -qO - https://kakwa.github.io/debian-rpm-build-tools/GPG-KEY.pub | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/debian-rpm-build-tools.gpg > /dev/null
+          echo "deb [arch=$(dpkg --print-architecture)] https://kakwa.github.io/debian-rpm-build-tools/deb.${VERSION_CODENAME}.$(dpkg --print-architecture)/ ${VERSION_CODENAME} main" | sudo tee /etc/apt/sources.list.d/debian-rpm-build-tools.list
+          sudo apt-get update
+          sudo apt-get install -y mock createrepo-c rpm dnf gnupg2
+
+      - name: Initialize test package
+        run: |
+          ./common/init_pkg.sh -n test_package
+ 
+      - name: Build package
+        run: |
+          cd test_package/
+          if [[ "${{ matrix.type }}" == "deb" ]]; then
+            make deb DIST=${{ matrix.dist }}
+          else
+            make rpm DIST=${{ matrix.dist }}
+          fi
+
+      - name: Check build artifacts
+        run: |
+          find ./out -type f -name "*.deb" -o -name "*.rpm" | sort
+
+      - name: Build repository
+        run: |
+          if [[ "${{ matrix.type }}" == "deb" ]]; then
+            make deb_repo DIST=${{ matrix.dist }}
+          else
+            make rpm_repo DIST=${{ matrix.dist }}
+          fi
+
+      - name: Verify repository structure
+        run: |
+          if [[ "${{ matrix.type }}" == "deb" ]]; then
+            find ./out/deb/${{ matrix.dist }} -type f | sort
+          else
+            find ./out/rpm/${{ matrix.dist }}_* -type f | sort
+          fi 
