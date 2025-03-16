@@ -42,7 +42,7 @@ jobs:
           sudo apt-get update
           
           # Install Debian/Ubuntu tools
-          sudo apt-get install -y make debhelper reprepro cowbuilder wget
+          sudo apt-get install -y make debhelper reprepro cowbuilder wget jq
           
           # Install RPM tools for Debian
           . /etc/os-release
@@ -53,33 +53,26 @@ jobs:
 
       - name: Initialize test package
         run: |
-          ./common/init_pkg.sh -n test_package
+          ./common/init_pkg.sh -n testpackage
  
       - name: Build package
         run: |
-          cd test_package/
-          if [[ "${{ matrix.type }}" == "deb" ]]; then
-            make deb DIST=${{ matrix.dist }}
-          else
-            make rpm DIST=${{ matrix.dist }}
-          fi
+          make ${{ matrix.type }}_chroot DIST=${{ matrix.dist }} -C testpackage/
 
       - name: Check build artifacts
         run: |
-          find ./out -type f -name "*.deb" -o -name "*.rpm" | sort
+          find testpackage/out -type f -name "*.deb" -o -name "*.rpm" | sort
 
       - name: Build repository
         run: |
-          if [[ "${{ matrix.type }}" == "deb" ]]; then
-            make deb_repo DIST=${{ matrix.dist }}
-          else
-            make rpm_repo DIST=${{ matrix.dist }}
-          fi
+          make ${{ matrix.type }}_repo DIST=${{ matrix.dist }} -C testpackage/
 
-      - name: Verify repository structure
+      - name: Check Repo
         run: |
-          if [[ "${{ matrix.type }}" == "deb" ]]; then
-            find ./out/deb/${{ matrix.dist }} -type f | sort
-          else
-            find ./out/rpm/${{ matrix.dist }}_* -type f | sort
-          fi 
+          find out -type f -name "*.deb" -o -name "*.rpm" | sort
+
+      - name: Check Matrix
+        run: |
+          cp common/Makefile.config.ex ./Makefile.config
+          make github_matrix | jq .
+
