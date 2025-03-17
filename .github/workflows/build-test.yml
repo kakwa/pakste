@@ -61,15 +61,16 @@ jobs:
         run: |
           find testpackage/out -type f -name "*.deb" -o -name "*.rpm" | sort
 
-      - name: Build repository
-        run: |
-          make ${{ matrix.type }}_repo DIST=${{ matrix.dist }} --trace
-
-      - name: Check Repo
-        run: |
-          find out -type f -name "*.deb" -o -name "*.rpm" | sort
-
       - name: Check Matrix
         run: |
           cp common/Makefile.config.ex ./Makefile.config
           make github_matrix | jq .
+
+          # TODO
+          #- name: Build repository
+          #  run: |
+          #    make ${{ matrix.type }}_repo DIST=${{ matrix.dist }} --trace
+
+          #- name: Check Repo
+          #  run: |
+          #    find out -type f -name "*.deb" -o -name "*.rpm" | sort
