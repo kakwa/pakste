@@ -17,7 +17,7 @@ export SUDO=sudo
 
 # Add the GPG key
 wget -qO - https://@ORG@.github.io/@REPO@/GPG-KEY.pub | \
-    gpg --dearmor | ${SUDO} tee /etc/apt/trusted.gpg.d/@REPO@.gpg
+    gpg --dearmor | ${SUDO} tee /etc/apt/trusted.gpg.d/@REPO@.gpg >/dev/null
 
 # Add the repository
 echo "deb [arch=$(dpkg --print-architecture)] \

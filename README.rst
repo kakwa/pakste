@@ -56,14 +56,21 @@ Debian/Ubuntu
 
 .. sourcecode:: bash
 
+    # if you want to use sudo
+    export SUDO=sudo
+
     # Configure repository
     . /etc/os-release
-    wget -qO - https://kakwa.github.io/debian-rpm-build-tools/GPG-KEY.pub | gpg --dearmor | tee /etc/apt/trusted.gpg.d/debian-rpm-build-tools.gpg
-    echo "deb [arch=$(dpkg --print-architecture)] https://kakwa.github.io/debian-rpm-build-tools/deb.${VERSION_CODENAME}.$(dpkg --print-architecture)/ ${VERSION_CODENAME} main" | tee /etc/apt/sources.list.d/debian-rpm-build-tools.list
-    apt update
+    wget -qO - https://kakwa.github.io/debian-rpm-build-tools/GPG-KEY.pub | \
+        gpg --dearmor | ${SUDO} tee /etc/apt/trusted.gpg.d/debian-rpm-build-tools.gpg >/dev/null
+    echo "deb [arch=$(dpkg --print-architecture)] \
+    https://kakwa.github.io/debian-rpm-build-tools/deb.${VERSION_CODENAME}.$(dpkg --print-architecture)/ \
+    ${VERSION_CODENAME} main" | \
+        ${SUDO} tee /etc/apt/sources.list.d/debian-rpm-build-tools.list
 
     # Install packages
-    apt install mock createrepo-c rpm dnf gnupg2
+    ${SUDO} apt update
+    ${SUDO} apt install mock createrepo-c rpm dnf gnupg2
 
 RHEL/Rocky/Fedora
 ~~~~~~~~~~~~~~~~~
