@@ -61,10 +61,11 @@ Debian/Ubuntu
 
     # Configure repository
     . /etc/os-release
+    ARCH=$(dpkg --print-architecture)
     wget -qO - https://kakwa.github.io/debian-rpm-build-tools/GPG-KEY.pub | \
         gpg --dearmor | ${SUDO} tee /etc/apt/trusted.gpg.d/debian-rpm-build-tools.gpg >/dev/null
-    echo "deb [arch=$(dpkg --print-architecture)] \
-    https://kakwa.github.io/debian-rpm-build-tools/deb.${VERSION_CODENAME}.$(dpkg --print-architecture)/ \
+    echo "deb [arch=${ARCH}] \
+    https://kakwa.github.io/debian-rpm-build-tools/deb.${VERSION_CODENAME}.${ARCH}/ \
     ${VERSION_CODENAME} main" | \
         ${SUDO} tee /etc/apt/sources.list.d/debian-rpm-build-tools.list
 
