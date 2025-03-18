@@ -8,7 +8,7 @@ If you need to troubleshoot the build in the chroot, run the ``<PKG>_shell_chroo
 
 This trigger a build and spawn a shell in case of failure, enabling you to troubleshoot from there:
 
-.. sourvecode:: bash
+.. sourcecode:: bash
 
     # Deb version
     make deb_shell_chroot DIST=trixie
