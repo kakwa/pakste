@@ -10,12 +10,16 @@ Pakste
     :target: https://github.com/kakwa/pakste/actions/workflows/build-test.yml
     :alt: Tests
 
+|
+
 .. image:: https://raw.githubusercontent.com/kakwa/pakste/refs/heads/main/common/docs/assets/pakste_w.svg
    :alt: Logo
-   :width: 160px
+   :width: 150px
    :align: left
 
-Pakste: a ``deb``/``rpm`` packaging & repository publishing toolkit leveraging Github Actions & Github Pages.
+``deb``/``rpm`` packaging & repository publishing toolkit leveraging Github Actions & Github Pages.
+
+|
 
 .. list-table::
    :header-rows: 0
@@ -23,9 +27,9 @@ Pakste: a ``deb``/``rpm`` packaging & repository publishing toolkit leveraging G
    :align: left
 
    * - Documentation
-     - `GitHub Pages <https://kakwa.github.io/pakste/>`_
+     - `Pakste Manual <https://kakwa.github.io/pakste/>`_
    * - Repository
-     - `Git Repo on GitHub <https://github.com/kakwa/pakste>`_
+     - `Pakste on GitHub <https://github.com/kakwa/pakste>`_
    * - Author
      - kakwalab © 2025
    * - License
@@ -45,20 +49,6 @@ Pakste provides:
 * Easy to use commands to target differente distribution versions & architectures thanks to ``mock``/``pbuilder`` & ``binfmt`` respectively.
 * Proper tracking of build dependencies, again, thanks to ``mock``/``pbuilder`` and their disposable build containes.
 * Github Action workflow to automate build and publication via Github Pages (Easily modifiable for other destinations).
-
-.. list-table::
-   :header-rows: 0
-   :widths: 100 100
-   :align: left
-
-   * - Documentation
-     - `GitHub Pages <https://kakwa.github.io/pakste/>`_
-   * - Repository
-     - `Git Repo on GitHub <https://github.com/kakwa/pakste>`_
-   * - Author
-     - kakwalab © 2025
-   * - License
-     - MIT
 
 .. build_deps_start
 
