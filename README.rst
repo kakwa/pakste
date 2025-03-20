@@ -17,6 +17,20 @@ Pakste
 
 Pakste: a ``deb``/``rpm`` packaging & repository publishing toolkit leveraging Github Actions & Github Pages.
 
+.. list-table::
+   :header-rows: 0
+   :widths: 100 100
+   :align: left
+
+   * - Documentation
+     - `GitHub Pages <https://kakwa.github.io/pakste/>`_
+   * - Repository
+     - `Git Repo on GitHub <https://github.com/kakwa/pakste>`_
+   * - Author
+     - kakwalab © 2025
+   * - License
+     - MIT
+
 Presentation
 ============
 
