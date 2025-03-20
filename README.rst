@@ -17,6 +17,9 @@ Pakste
 
 Pakste: a ``deb``/``rpm`` packaging & repository publishing toolkit leveraging Github Actions & Github Pages.
 
+Presentation
+============
+
 Pakste is a toolkit for developpers working with Debian-based or Red Hat-based distributions who need consistent,
 reproducible package builds across different environments but don't have the time to setup a build and hosting servers.
 
