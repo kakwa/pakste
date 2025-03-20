@@ -23,7 +23,7 @@ Presentation
 Pakste is a toolkit for developpers working with Debian-based or Red Hat-based distributions who need consistent,
 reproducible package builds across different environments but don't have the time to setup a build and hosting servers.
 
-It provides:
+Pakste provides:
 
 * Wrapper & integration between the numerous ``.rpm`` and ``.deb`` build & repo tools and providing easier to remember commands like ``make rpm_chroot`` or ``make deb_chroot``.
 * Easy packaging bootstrapping.
