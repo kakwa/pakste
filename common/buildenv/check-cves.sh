@@ -4,6 +4,15 @@
 VERSION_START=""
 IGNORE_CVES=""
 
+# Convert CPE pattern to regex pattern
+cpe_to_regex() {
+    local cpe="$1"
+    # Escape special regex characters except *
+    cpe=$(echo "$cpe" | sed 's/[*+?^${}()|[]/\\&/g')
+    # Replace * with .* for regex matching
+    echo "$cpe" | sed 's/\\\*/.*/g'
+}
+
 usage() {
     echo "Usage: $0 -c cpe_pattern [-v version] [-k api_key] [-i cve1,cve2,...]"
     echo "  -c cpe_pattern  CPE pattern (e.g. 'cpe:2.3:*:libssh2:*:*:*:*:*')"
@@ -63,13 +72,16 @@ if [ -n "$IGNORE_LIST" ]; then
     JQ_FILTER="$JQ_FILTER | select(.cve.id | test(\"^($IGNORE_LIST)$\") | not)"
 fi
 
+# Convert CPE pattern to regex for matching
+CPE_REGEX=$(cpe_to_regex "$CPE_PATTERN")
+
 QUERY="$JQ_FILTER | \
                     \"ID:          \" + .cve.id +
                     \"\nLink:        https://nvd.nist.gov/vuln/detail/\"+(.cve.id) +
                     \"\nPublished:   \" + (.cve.published) +
                     \"\nSeverity:    \" + (try .cve.metrics.cvssMetricV31[0].cvssData.baseSeverity catch \"UNKNOWN\") +
                     \"\nBase Score:  \" + (try (.cve.metrics.cvssMetricV31[0].cvssData.baseScore | tostring) catch \"N/A\") +
-                    \"\nVersion End: \" + (try (.cve.configurations[].nodes[] | select(.cpeMatch[] | .criteria == \"$CPE_PATTERN\") | .cpeMatch[].versionEndExcluding) catch \"N/A\") +
+                    \"\nVersion End: \" + (try (.cve.configurations[].nodes[] | select(.cpeMatch[] | .criteria | test(\"^$CPE_REGEX$\")) | .cpeMatch[].versionEndExcluding) catch \"N/A\") +
                     \"\n\" + (\"-\" * 80)"
 
 # Create a temporary file for the JSON response
