@@ -64,11 +64,12 @@ if [ -n "$IGNORE_LIST" ]; then
 fi
 
 QUERY="$JQ_FILTER | \
-                    \"ID:         \" + .cve.id +
-                    \"\nLink:       https://nvd.nist.gov/vuln/detail/\"+(.cve.id) +
-                    \"\nPublished:  \" + (.cve.published) +
-                    \"\nSeverity:   \" + (try .cve.metrics.cvssMetricV31[0].cvssData.baseSeverity catch \"UNKNOWN\") +
-                    \"\nBase Score: \" + (try (.cve.metrics.cvssMetricV31[0].cvssData.baseScore | tostring) catch \"N/A\") +
+                    \"ID:          \" + .cve.id +
+                    \"\nLink:        https://nvd.nist.gov/vuln/detail/\"+(.cve.id) +
+                    \"\nPublished:   \" + (.cve.published) +
+                    \"\nSeverity:    \" + (try .cve.metrics.cvssMetricV31[0].cvssData.baseSeverity catch \"UNKNOWN\") +
+                    \"\nBase Score:  \" + (try (.cve.metrics.cvssMetricV31[0].cvssData.baseScore | tostring) catch \"N/A\") +
+                    \"\nVersion End: \" + (try (.cve.configurations[].nodes[] | select(.cpeMatch[] | .criteria == \"$CPE_PATTERN\") | .cpeMatch[].versionEndExcluding) catch \"N/A\") +
                     \"\n\" + (\"-\" * 80)"
 
 # Create a temporary file for the JSON response
