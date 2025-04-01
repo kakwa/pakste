@@ -91,7 +91,8 @@ trap 'rm -f "$TEMP_JSON"' EXIT
 # Fetch the data
 curl -s $HEADERS "${URL}?${PARAMS}" > "$TEMP_JSON"
 
-cat $TEMP_JSON | jq .
+#cat $TEMP_JSON | jq .
+
 # Process and output the results
 jq -r "$QUERY" "$TEMP_JSON"
 
