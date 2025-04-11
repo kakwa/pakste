@@ -4,7 +4,7 @@ Packaging
 Overview
 --------
 
-Creating a package involves these steps:
+Creating a package involves the following steps:
 
 1. Initialize package directories
 2. Configure metadata and upstream source in **Makefile**
@@ -12,51 +12,14 @@ Creating a package involves these steps:
 4. Configure distribution-specific packaging
 5. Build the package
 
-Building a Package
-------------------
-
-First, go in the package directory:
-
-.. sourcecode:: bash
-
-    cd <package-dir>
-
-Building the ``.rpm`` Package:
-
-.. sourcecode:: bash
-
-    make rpm_chroot DIST=el9  # Replace with target
-
-    tree *out
-    out
-    └── mk-sh-skel-0.0.1-1.amk+el9.noarch.rpm
-
-Building the ``.deb`` Package:
-
-.. sourcecode:: bash
-
-    make deb_chroot DIST=trixie  # Replace with target
-
-    tree out
-    out
-    └── mk-sh-skel_0.0.1-1~amk+deb13_all.deb
-
-Clean:
-
-.. sourcecode:: bash
-
-    # (uncomment KEEP_CACHE=true to keep downloads)
-    make clean #KEEP_CACHE=true
-
-
-Creating a Package
-------------------
+Creating Packages
+-----------------
 
 Initialize a packaging skeleton:
 
 .. sourcecode:: bash
 
-    ./common/init_pkg.sh -n foo
+    ./common/init_pkg.sh -n yourpackage
 
 This creates the following structure:
 
@@ -74,6 +37,42 @@ This creates the following structure:
     │   └── component.spec  # RPM spec file
     ├── Makefile          # Package metadata and build configuration
     └── MANIFEST          # Checksums of upstream sources
+
+Building Packages
+-----------------
+
+First, go in the package directory:
+
+.. sourcecode:: bash
+
+    cd yourpackage
+
+Building the ``.rpm`` Package:
+
+.. sourcecode:: bash
+
+    make rpm_chroot DIST=el9  # Replace with target
+
+    tree *out
+    out
+    └── yourpackage-0.0.1-1.amk+el9.noarch.rpm
+
+Building the ``.deb`` Package:
+
+.. sourcecode:: bash
+
+    make deb_chroot DIST=trixie  # Replace with target
+
+    tree out
+    out
+    └── yourpackage_0.0.1-1~amk+deb13_all.deb
+
+Clean:
+
+.. sourcecode:: bash
+
+    # (uncomment KEEP_CACHE=true to keep downloads)
+    make clean #KEEP_CACHE=true
 
 Makefile Setup
 --------------
@@ -140,14 +139,11 @@ It is also possible to manually tweak the archive if necessary (leveraging ``$(S
 .. sourcecode:: make
 
     # Example of upstream debian/ packaging removal
+    # note the switch -o -> -O in $(WGS)
     $(SOURCE_ARCHIVE): $(SOURCE_DIR) $(CACHE) Makefile MANIFEST
-        $(WGS) -u $(URL_SRC) -o $(BUILD_DIR)/$(NAME)-$(VERSION).tar.gz
-        mkdir -p $(BUILD_DIR)/tmp
-        tar -vxf $(BUILD_DIR)/$(NAME)-$(VERSION).tar.gz -C $(BUILD_DIR)/tmp
-        rm -rf $(BUILD_DIR)/tmp/$(NAME)-$(VERSION)/debian
-        mv $(BUILD_DIR)/tmp/$(NAME)-$(VERSION)/* $(SOURCE_DIR)
-        rm -rf $(BUILD_DIR)/tmp
-        rm -f $(BUILD_DIR)/$(NAME)-$(VERSION).tar.gz
+        $(WGS) -u $(URL_SRC) -O $(NAME)-$(VERSION).tar.gz
+        tar -vxf $(CACHE_DIR)/$(NAME)-$(VERSION).tar.gz -C $(SOURCE_DIR) --strip-components=1
+        rm -rf $(SOURCE_DIR)/debian
         $(SOURCE_TAR_CMD)
 
 Skipping Version

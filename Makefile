@@ -342,6 +342,7 @@ update:
 	@wget -qO- https://github.com/kakwa/pakste/archive/refs/heads/main.tar.gz | tar --strip-components=1 -xz
 	@echo "Don't forget to review and commit:"
 	@echo " * git diff"
+	@echo " * git add ./"
 	@echo " * git commit -m 'update pakste - upstream commit: $(shell  wget -qO- https://api.github.com/repos/kakwa/pakste/commits/main | grep '\"sha\"' | head -1 | sed 's/.*"\([^"]*\)",/\1/')'"
 
 github_matrix:

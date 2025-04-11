@@ -9,7 +9,7 @@ Debian/Ubuntu:
 
 .. sourcecode:: bash
 
-    # Adapt with the architectures you are targetting
+    # Adapt with the CPU architectures you are targetting
     apt install binfmt-support qemu-utils qemu-user-static \
         qemu-system-arm qemu-system-misc qemu-system-ppc qemu-system-s390x
 
@@ -23,19 +23,21 @@ RHEL/Rocky/Fedora:
 Repository Initialization
 -------------------------
 
-Create a **bare*** git repository (most likely on github) and run the following commands:
+Create git repository (most likely on Github) and checkout it:
 
 .. sourcecode:: bash
 
-    # Set with your bare git repository uri
+    # Clone and cd in your repository
     export REPO_URL=<your git url>
+    git clone ${REPO_URL}
+    cd $(basename ${REPO_URL} | sed 's/\.git$//')
 
-    export REPO_DIR=$(basename ${REPO_URL} | sed 's/\.git$//')
-    git clone https://github.com/kakwa/pakste "${REPO_DIR}"
-    cd "${REPO_DIR}"
-    git remote remove origin
-    git remote add origin $REPO_URL
-    git push origin main
+Recover Pakste:
+
+.. sourcecode:: bash
+
+    # Download Pakste
+    wget -qO- https://github.com/kakwa/pakste/archive/refs/heads/main.tar.gz | tar --strip-components=1 -xz
 
 Optionally, create **README.md**:
 
@@ -54,6 +56,15 @@ Optionally, create **README.md**:
 
     # Tweak it if necessary
     vim README.md
+
+Commit:
+
+.. sourcecode:: bash
+
+    # Commit
+    git add ./
+    git commit -a -m 'init'
+    git push origin main
 
 Updating Pakste
 ---------------

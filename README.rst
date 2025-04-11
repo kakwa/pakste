@@ -46,7 +46,7 @@ reproducible package builds across different environments, without the hassle of
 * Wrapper & integration between the numerous ``.rpm`` and ``.deb`` build & repo tools and providing easier to remember commands like ``make rpm_chroot`` or ``make deb_chroot``.
 * Easy packaging bootstrapping.
 * Provide various source code recovery helpers to easily package upstream repositories with a good level reproducibility.
-* Multi-Distribution & Architecture targeting thanks to ``mock``/``pbuilder`` & ``binfmt`` respectively.
+* Multi-Distribution & CPU Architecture targeting thanks to ``mock``/``pbuilder`` & ``binfmt`` respectively.
 * Build dependencies consistency, again, thanks to ``mock``/``pbuilder`` and their disposable build containers.
 * Github Action workflow for automated builds and publication via Github Pages (easily customizable for other destinations).
 
