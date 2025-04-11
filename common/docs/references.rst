@@ -8,6 +8,8 @@ Here are a few projects using Pakste:
 
 * `Debian/Ubuntu packaging for RPM/Mock <https://github.com/kakwa/debian-rpm-build-tools>`_ (itself a Pakste dependency).
 * `Misc Open Feature Flag packages <https://github.com/funwithfeatureflags/fffpkg>`_.
+* `Packages for Author's projects <https://github.com/kakwa/kakwalab-pkg>`_.
+* `Misc Packages from upstream projects <https://github.com/kakwa/misc-pkg>`_.
 
 Makefile Targets
 ----------------
