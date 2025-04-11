@@ -37,13 +37,12 @@ If the change is legitimate, then rebuild the MANIFEST:
 
 .. note::
 
-    In case the manifest in missing, you will get the following error:
+    In case the manifest in missing, you will get the following error (same fix applies):
 
    .. sourcecode:: bash
+      
+      [ERROR] No checksum found in manifest for mk-sh-skel-1.4.9.tar.gz
 
-        [ERROR] No checksum found in manifest for mk-sh-skel-1.4.9.tar.gz
-
-    The same fix applies
 
 
 Repository Key Issues
