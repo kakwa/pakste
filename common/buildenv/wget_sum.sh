@@ -10,6 +10,7 @@ Download files, checking them against a manifest
 arguments:
   -u <url>: url of the file to download
   -o <outfile>: path to output file
+  -O <outfile>: only get the cache_dir output file
   -m <manifest file>: path to manifest file (file containing hashes)
   -c: flag to fill the manifest file
   -C <cache dir>: directory where to cache downloads
@@ -65,14 +66,18 @@ download_file() {
     outfile="$2"
     cache_dir="$3"
     source_file="$4"
+    no_link="$5"
 
     if [ -n "$cache_dir" ]; then
         if [ ! -f "${cache_dir}/${source_file}" ]; then
             wget -q --show-progress "$url" -O "${cache_dir}/${source_file}" ||
                 exit_error "[ERROR] download failed" "$outfile" "$cache_dir" "$source_file"
         fi
-        cp "${cache_dir}/${source_file}" "$outfile" ||
-            exit_error "[ERROR] Failed to copy from cache" "$outfile" "$cache_dir" "$source_file"
+        if ! [ "${no_link}" = "true" ]
+        then
+            ln "${cache_dir}/${source_file}" "$outfile" ||
+                exit_error "[ERROR] Failed to copy from cache" "$outfile" "$cache_dir" "$source_file"
+        fi
     else
         wget -q --show-progress "$url" -O "$outfile" ||
             exit_error "[ERROR] download failed" "$outfile" "$cache_dir" "$source_file"
@@ -82,12 +87,17 @@ download_file() {
 # Calculate checksum of a file
 calculate_checksum() {
     file="$1"
-    outfile="$2"
-    cache_dir="$3"
-    source_file="$4"
+    cache_dir="$2"
+    no_link="$3"
+    if [ "${no_link}" = "true" ]
+    then
+        file="${cache_dir}/$(basename $outfile)"
+    else
+        file="$outfile"
+    fi
 
     sum=$(sha512sum "$file" | awk '{print $1}')
-    [ -z "$sum" ] && exit_error "[ERROR] Failed to calculate checksum" "$outfile" "$cache_dir" "$source_file"
+    [ -z "$sum" ] && exit_error "[ERROR] Failed to calculate checksum" "$outfile"
     echo "$sum"
 }
 
@@ -143,7 +153,7 @@ CREATE_SUM=1
 MANIFEST_FILE="$(dirname "$0")/../MANIFEST"
 
 # Parse command line arguments
-while getopts ":hu:o:m:cC:" opt; do
+while getopts ":hu:o:m:cC:O:" opt; do
   case $opt in
     h) help;;
     u) URL="$OPTARG";;
@@ -151,6 +161,7 @@ while getopts ":hu:o:m:cC:" opt; do
     m) MANIFEST_FILE="$OPTARG";;
     c) CREATE_SUM=0;;
     C) CACHE_DIR="$OPTARG";;
+    O) OUTFILE="$OPTARG";CACHE_ONLY="true";;
     \?) echo "Invalid option: -$OPTARG" >&2; help;;
     :)  echo "Option -$OPTARG requires an argument." >&2;help;;
   esac
@@ -171,10 +182,10 @@ ensure_directory "$(dirname "$OUTFILE")" "$OUTFILE" "$CACHE_DIR" "$SOURCE_FILE"
 EXPECTED_SUM=$(get_expected_checksum "$MANIFEST_FILE" "$SOURCE_FILE")
 
 # Download the file
-download_file "$URL" "$OUTFILE" "$CACHE_DIR" "$SOURCE_FILE"
+download_file "$URL" "$OUTFILE" "$CACHE_DIR" "$SOURCE_FILE" "$CACHE_ONLY"
 
 # Calculate checksum
-SUM=$(calculate_checksum "$OUTFILE" "$OUTFILE" "$CACHE_DIR" "$SOURCE_FILE")
+SUM=$(calculate_checksum "$OUTFILE" "$CACHE_DIR" "$CACHE_ONLY")
 
 # Update or verify the checksum
 if [ $CREATE_SUM -eq 0 ]; then
