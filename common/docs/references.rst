@@ -225,55 +225,8 @@ Recovery + Clean-up (upstream `debian/` dir removal):
        @rm -rf -- $(SOURCE_DIR)/debian
        @$(SOURCE_TAR_CMD)
 
-Internal Scripts
-----------------
-
-Version comparator utility:
-
-.. sourcecode:: bash
-
-   # help
-   ./common/buildenv/compare_version.sh -h
-
-   # example
-   ./common/buildenv/compare_version.sh -v 1.0 -o '>' -V 0.9
-    
-Distribution metadata recovery utility:
-
-.. sourcecode:: bash
-
-   # help
-   ./common/buildenv/get_dist.sh -h
-
-   # example
-   ./common/buildenv/get_dist.sh ubu22.04
-
-Git Source Recovery & Manifest tool:
-
-.. sourcecode:: bash
-
-   # help
-   ./common/buildenv/git_sum.sh -h
-
-Wget based source recovery & manifest generation utility:
-
-.. sourcecode:: bash
-
-   # help
-   ./common/buildenv/wget_sum.sh -h
-
-Tool to check a given distribution against an ignore expression:
-
-.. sourcecode:: bash
-
-   # help
-   ./common/buildenv/skip_flag.sh -h
-
-   # example:
-   ./common/buildenv/skip_flag.sh -i '=:el:6 <:deb:8' -d deb -v 7
-
-Examples
---------
+Pakste Common Commands
+----------------------
 
 In a package directory:
 
@@ -306,3 +259,65 @@ At the root of the repository:
 
     # Clean but keep downloaded sources
     make clean KEEP_CACHE=true
+
+Internal Scripts
+----------------
+
+Version comparator utility:
+
+.. sourcecode:: bash
+
+   # help
+   ./common/buildenv/compare_version.sh -h
+
+   # example
+   ./common/buildenv/compare_version.sh -v 1.0 -o '>' -V 0.9
+    
+Distribution metadata recovery utility:
+
+.. sourcecode:: bash
+
+   # help
+   ./common/buildenv/get_dist.sh -h
+
+   # example
+   ./common/buildenv/get_dist.sh ubu22.04
+
+Git Source Recovery & Manifest tool:
+
+.. sourcecode:: bash
+
+   # help
+   ./common/buildenv/git_sum.sh -h
+
+   # example
+   ./common/buildenv/git_sum.sh -m ./MANIFEST \
+       -C "./cache/" \
+       -u https://github.com/Spotifyd/spotifyd/ \
+       -t v0.4.0 \
+       -o ./spotifyd_0.4.0.orig.tar.gz \
+       -c # update Manifest
+
+Wget based source recovery & manifest generation utility:
+
+.. sourcecode:: bash
+
+   # help
+   ./common/buildenv/wget_sum.sh -h
+
+   # example
+   ./common/buildenv/wget_sum.sh -m ./MANIFEST \
+       -C "./cache/" \
+       -u https://github.com/Spotifyd/spotifyd/archive/refs/tags/v0.4.1.tar.gz \
+       -o ./spotifyd_0.4.1.orig.tar.gz \
+       -c # update manifest
+
+Tool to check a given distribution against an ignore expression:
+
+.. sourcecode:: bash
+
+   # help
+   ./common/buildenv/skip_flag.sh -h
+
+   # example:
+   ./common/buildenv/skip_flag.sh -i '=:el:6 <:deb:8' -d deb -v 7
