@@ -164,3 +164,53 @@ You will see  errors like the following in **dmesg**:
     [  578.456180] sh[15402]: segfault at ffffffffff600400 ip ffffffffff600400 sp 00007ffd469c5aa8 error 15
 
 To work around this issue, add the **vsyscall=emulate** option in the kernel command line.
+
+Embedding Pakste in your project
+--------------------------------
+
+It's possible to leverage Pakste directly in your project.
+
+To do so, setup a standalone `Pakste` in a dedicated directory:
+
+.. sourcecode:: bash
+
+    # Create and enter packaging directory, download pakste
+    mkdir pkg/ && cd pkg/ && wget -qO- https://github.com/kakwa/pakste/archive/refs/heads/main.tar.gz | tar --strip-components=1 -xz
+    
+    # Setup Pakste in standalone mode
+    cp -r common/skel/* .
+    rm -rf buildenv
+    cp -r common/buildenv .
+    rm -rf common/ Makefile* README.rst .github/
+
+Then Create the package `Makefile`:
+
+.. sourcecode:: bash
+
+    # Extract package name and URL from git repository
+    REPO_URL=$(git config --get remote.origin.url)
+    PACKAGE_NAME=$(basename "$REPO_URL" .git)
+    
+    cat > Makefile << EOF
+    NAME=${PACKAGE_NAME}
+    VERSION=\$(shell { git describe --tags --dirty 2>/dev/null || echo '0.0.0'; } | sed 's/-/./g')
+    RELEASE=1
+    URL=${REPO_URL}
+    SUMMARY=\$(NAME)
+    DESCRIPTION=\$(SUMMARY)
+    LICENSE=Unknown
+    #SKIP=<=:deb:8 <=:el:6 <=:fc:29 <=:ubu:18.4
+    COWBUILD_BUILD_ADDITIONAL_ARGS=--use-network yes
+    
+    # Including common rules and targets
+    include buildenv/Makefile.common
+    
+    # Source Preparation
+    \$(SOURCE_ARCHIVE): \$(SOURCE_DIR) \$(CACHE) Makefile MANIFEST
+    	@rm -rf -- \$(SOURCE_DIR)
+    	@rsync -ap --ignore-errors --force --exclude pkg --exclude .git ../ \$(SOURCE_DIR)
+    	@\$(SOURCE_TAR_CMD)
+    EOF
+    sed -i  's/^    /\t/' Makefile
+
+From there, fill in the `Makefile` metadata and do the usual `.deb` and `.rpm` packaging.
