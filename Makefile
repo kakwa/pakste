@@ -338,9 +338,11 @@ help:
 	@echo "$$MAKE_HELP_MAIN"
 
 update:
-	@-git remote | grep -q '^pakste-upstream$$' || git remote add pakste-upstream https://github.com/kakwa/pakste
-	@git fetch pakste-upstream
-	@git merge pakste-upstream/main
+	@echo "Updating Pakste:"
+	@wget -qO- https://github.com/kakwa/pakste/archive/refs/heads/main.tar.gz | tar --strip-components=1 -xz
+	@echo "Don't forget to review and commit:"
+	@echo " * git diff"
+	@echo " * git commit -m 'update pakste - upstream commit: $(shell  wget -qO- https://api.github.com/repos/kakwa/pakste/commits/main | grep '\"sha\"' | head -1 | sed 's/.*"\([^"]*\)",/\1/')'"
 
 github_matrix:
 	@./common/buildenv/gh_matrix_gen.sh -r "$(RPM_ALL_TARGETS)" -d "$(DEB_ALL_TARGETS)"
