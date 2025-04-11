@@ -32,7 +32,9 @@ FAILURE_RPM_CHROOT_MARKER := failure.rpm.chroot.$(DIST).$(ARCH)
 # Must be declared before the include
 # Include Configuration Files
 # ----------------------------------------------------------------------------
+ifneq ($(wildcard common/buildenv/Makefile.vars),)
 include ./common/buildenv/Makefile.vars
+endif
 
 DEB_OUT_DIR := $(shell readlink -f $(OUT_DIR))/deb.$(DIST).$(ARCH)
 LOCAL_REPO_PATH := $(DEB_OUT_DIR)/raw
