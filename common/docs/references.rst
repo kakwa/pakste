@@ -250,6 +250,7 @@ Wget based source recovery & manifest generation utility:
     arguments:
       -u <url>: url of the file to download
       -o <outfile>: path to output file
+      -O <outfile>: only get the cache_dir output file
       -m <manifest file>: path to manifest file (file containing hashes)
       -c: flag to fill the manifest file
       -C <cache dir>: directory where to cache downloads
