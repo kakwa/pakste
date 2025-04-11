@@ -209,6 +209,7 @@ Git Source Recovery & Manifest tool:
         -t <tag>          Git tag to check out
         -r <revision>     Git revision to check out
         -s                Initialize and update submodules
+        -O <outfile>      Only get the cache_dir output file
         -h                Show this help message
 
 Tool to check a given distribution against an ignore expression:
