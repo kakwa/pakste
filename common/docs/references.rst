@@ -205,6 +205,26 @@ The source recovery helpers (``WGS`` and ``GS``) expose the following arguments 
      - No
      - Initialize and update Git submodules (for ``GS`` only)
 
+Examples
+~~~~~~~~
+
+Basic Recovery:
+
+.. sourcecode:: make
+
+   $(SOURCE_ARCHIVE): $(CACHE) Makefile MANIFEST | $(SOURCE_DIR)
+       $(WGS) -u $(URL_SRC) -o $(BUILD_DIR)/$(NAME)-$(VERSION).tar.gz
+
+Recovery + Clean-up (upstream `debian/` dir removal):
+
+.. sourcecode::
+
+   $(SOURCE_ARCHIVE): $(CACHE) Makefile MANIFEST | $(SOURCE_DIR)
+       @$(WGS) -u $(URL_SRC) -O $(NAME)-$(VERSION).tar.gz
+       @tar -vxf $(CACHE_DIR)/$(NAME)-$(VERSION).tar.gz -C $(SOURCE_DIR) --strip-components=1
+       @rm -rf -- $(SOURCE_DIR)/debian
+       @$(SOURCE_TAR_CMD)
+
 Internal Scripts
 ----------------
 
