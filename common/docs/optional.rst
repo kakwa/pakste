@@ -93,7 +93,7 @@ If you need access (for example, to use `go get` or `npm install`), add the foll
     COWBUILD_BUILD_ADDITIONAL_ARGS=--use-network yes
     MOCK_BUILD_ADDITIONAL_ARGS=--enable-network
 
-Tmpfs
+TMPFS
 -----
 
 If you have RAM to spare, using tmpfs mounts can significantly accelerate the build process.
