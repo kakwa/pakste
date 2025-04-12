@@ -86,22 +86,16 @@ The Makefile contains package metadata and upstream source configuration:
 
     # Package name
     NAME = mk-sh-skel
-
     # Version
     VERSION = 1.0.0
-
     # URL of the project
     URL = https://github.com/kakwa/mk-sh-skel
-
     # Revision number
     RELEASE = 1
-
     # Description
     DESCRIPTION = "Description of the package"
-
     # License of the package
     LICENSE = "MIT"
-
     # URL to upstream source
     URL_SRC = $(URL)/archive/$(VERSION).tar.gz
 
