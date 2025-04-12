@@ -14,6 +14,9 @@ Miscellaneous Targets
    * - Target
      - Level
      - Description
+   * - ``update``
+     - repo/root
+     - Update Pakste to latest version
    * - ``help``
      - package & repo/root
      - Display available targets and their descriptions
