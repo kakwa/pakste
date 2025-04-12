@@ -49,7 +49,7 @@ It provides reasonably consistent and reproducible package builds across differe
 * Build dependencies consistency, again, thanks to ``mock``/``pbuilder`` and their disposable build containers.
 * Github Action Workflow for automated builds and publication via Github Pages (easily customizable for other destinations).
 
-Example projects:
+**Example projects**:
 
 * `Debian/Ubuntu packaging for RPM/Mock <https://github.com/kakwa/debian-rpm-build-tools>`_.
 * `Misc Open Feature Flag packages <https://github.com/funwithfeatureflags/fffpkg>`_.
